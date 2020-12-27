@@ -9,13 +9,13 @@ export class HttpTokenInterceptor implements HttpInterceptor {
 
   constructor(
     private authService: AuthService,
-    private jwtService: TokenService
+    private tokenService: TokenService
   ) {
   }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    const token = this.jwtService.getToken();
+    const token = this.tokenService.getToken();
 
     // const isLoggedIn = token && this.authService.isLoggedIn;
     // const isApiUrl = request.url.startsWith(environment.apiSettings.hostname);
