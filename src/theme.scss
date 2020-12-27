@@ -1,0 +1,85 @@
+@import '~@angular/material/theming';
+
+// Override the typography in the core CSS.
+@include mat-core();
+
+$primary-color: (
+  50 : #e8e0f4,
+  100 : #c6b3e3,
+  200 : #a180d1,
+  300 : #7b4dbe,
+  400 : #5e26b0,
+  500 : #4200a2,
+  600 : #3c009a,
+  700 : #330090,
+  800 : #2b0086,
+  900 : #1d0075,
+  A100 : #b3a3ff,
+  A200 : #8870ff,
+  A400 : #5e3dff,
+  A700 : #4824ff,
+  contrast: (
+    50 : #000000,
+    100 : #000000,
+    200 : #000000,
+    300 : #ffffff,
+    400 : #ffffff,
+    500 : #ffffff,
+    600 : #ffffff,
+    700 : #ffffff,
+    800 : #ffffff,
+    900 : #ffffff,
+    A100 : #000000,
+    A200 : #000000,
+    A400 : #ffffff,
+    A700 : #ffffff,
+  )
+);
+
+
+$accent-color: (
+  50 : #e5e5e5,
+  100 : #bdbebf,
+  200 : #919395,
+  300 : #65686a,
+  400 : #44474a,
+  500 : #23272a,
+  600 : #1f2325,
+  700 : #1a1d1f,
+  800 : #151719,
+  900 : #0c0e0f,
+  A100 : #55aaff,
+  A200 : #2290ff,
+  A400 : #0077ee,
+  A700 : #006ad4,
+  contrast: (
+    50 : #000000,
+    100 : #000000,
+    200 : #000000,
+    300 : #ffffff,
+    400 : #ffffff,
+    500 : #ffffff,
+    600 : #ffffff,
+    700 : #ffffff,
+    800 : #ffffff,
+    900 : #ffffff,
+    A100 : #000000,
+    A200 : #ffffff,
+    A400 : #ffffff,
+    A700 : #ffffff,
+  )
+);
+
+
+
+$primary: mat-palette($primary-color, 700);
+$accent: mat-palette($accent-color);
+$warn: mat-palette($mat-red);
+
+$theme: mat-dark-theme($primary, $accent, $warn);
+
+@include angular-material-theme($theme);
+
+.mat-snack-bar-container {
+  color: #000;
+}

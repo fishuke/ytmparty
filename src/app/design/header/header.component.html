@@ -1,0 +1,26 @@
+<mat-toolbar color="primary" class="mat-elevation-z24">
+  <span [routerLink]="'/'" style="cursor: pointer">Better Chat</span>
+
+  <div fxFlex></div>
+
+  <a style="color: white" [href]="Oauth2Link" *ngIf="!auth.isLoggedIn">
+    <button mat-button>
+      <mat-icon mat-list-icon>login</mat-icon>
+      <span class="menu-item"> Giriş Yap</span>
+    </button>
+  </a>
+
+
+  <!--  <button mat-stroked-button class="profile-btn" [matMenuTriggerFor]="profileMenu" *ngIf="auth.isLoggedIn">-->
+  <!--    <mat-icon class="mobile-hidden">arrow_drop_down</mat-icon>-->
+  <!--  </button>-->
+
+  <!--  <mat-menu #profileMenu="matMenu">-->
+  <!--    <button mat-button (click)="auth.purge()">-->
+  <!--      <mat-icon mat-list-icon>exit_to_app</mat-icon>-->
+  <!--      <span> Çıkış Yap</span>-->
+  <!--    </button>-->
+  <!--  </mat-menu>-->
+
+</mat-toolbar>
+
