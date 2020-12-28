@@ -7,7 +7,6 @@ import {AuthService} from '@core/services/auth.service';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
-  Oauth2Link: any;
 
   constructor(public auth: AuthService) {
   }

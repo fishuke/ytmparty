@@ -3,7 +3,7 @@
 
   <div fxFlex></div>
 
-  <a style="color: white" [href]="Oauth2Link" *ngIf="!auth.isLoggedIn">
+  <a style="color: white" [href]="auth.oauth2URL" *ngIf="!auth.isLoggedIn">
     <button mat-button>
       <mat-icon mat-list-icon>login</mat-icon>
       <span class="menu-item"> Giriş Yap</span>
