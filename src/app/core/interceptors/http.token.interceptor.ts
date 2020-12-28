@@ -23,7 +23,9 @@ export class HttpTokenInterceptor implements HttpInterceptor {
     if (token) {
       request = request.clone({
         setHeaders: {
-          Authorization: `Bearer ${token}`
+          Authorization: `OAuth ${token}`,
+          Accept: 'application/vnd.twitchtv.v5+json',
+          'Client-ID': 'iorij84zsvsyowclla1vnco2mqaa49'
         }
       });
     }
