@@ -16,3 +16,9 @@ export interface User {
   type: string;
   updated_at: string;
 }
+
+export interface Message {
+  content: string;
+  author: string;
+  color: string;
+}
