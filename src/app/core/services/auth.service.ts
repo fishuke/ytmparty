@@ -16,13 +16,14 @@ export class AuthService {
   private isLoggedInSubject: BehaviorSubject<boolean>;
   public isLoggedIn$: Observable<boolean>;
 
-  public oauth2URL = `https://id.twitch.tv/oauth2/authorize?client_id=iorij84zsvsyowclla1vnco2mqaa49&redirect_uri=${environment.ORIGIN}/login&response_type=token&scope=user_read+chat:read`;
+  public oauth2URL = `https://id.twitch.tv/oauth2/authorize?client_id=${environment.CLIENT_ID}&redirect_uri=${environment.ORIGIN}/login&response_type=token&scope=user_read+chat:read`;
 
   constructor(
     private apiService: ApiService,
     private tokenService: TokenService,
     private router: Router,
-    private snack: SnackbarService
+    private snack: SnackbarService,
+    private api: ApiService
   ) {
     this.userStateSubject = new BehaviorSubject(null);
     this.userState$ = this.userStateSubject.asObservable().pipe(distinctUntilChanged());
@@ -45,12 +46,13 @@ export class AuthService {
     const token = this.tokenService.getToken();
 
     if (token) {
-      // this.apiService.get('user/@me')
-      //   .toPromise()
-      //   .then(response => {
-      //     this.set(response.data);
-      //   })
-      //   .catch(() => this.purge());
+      this.apiService.get('kraken/user')
+        .toPromise()
+        .then(response => {
+          console.log(response);
+          this.set(response);
+        })
+        .catch(() => this.purge());
     } else {
       this.purge();
     }
@@ -69,9 +71,9 @@ export class AuthService {
     // this.router.navigate(['/']).then(() => this.snack.default('Successfully logged out.'));
   }
 
-  async login(token): Promise<any> {
-    console.log(token);
-    // TODO login with twitch Oauth2
+  async login(token: string): Promise<any> {
+    this.tokenService.saveToken(token);
+    this.check();
   }
 
 
