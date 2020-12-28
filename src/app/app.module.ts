@@ -10,7 +10,6 @@ import { DesignModule } from '@design/design.module';
   ],
   imports: [
     AppRoutingModule,
-    // SocketIoModule.forRoot({url: environment.WS_URL, options: {transports: ['websocket']}}),
     CoreModule,
     DesignModule
   ],
