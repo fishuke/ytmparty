@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
             this.redirectToHome();
           }
           if (token){
-            this.auth.login(token);
+            this.auth.login(token).then(() => this.redirectToHome());
           }
         } else {
           this.redirectToHome();
