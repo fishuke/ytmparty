@@ -42,6 +42,17 @@ export class AuthService {
     return this.isLoggedInSubject.value;
   }
 
+  async loginPromise(): Promise<void> {
+    await new Promise((resolve, reject) => {
+      this.isLoggedIn$.subscribe(isLoggedIn => {
+        if (isLoggedIn === true) {
+          resolve();
+        }
+      });
+    });
+  }
+
+
   check(): void {
     const token = this.tokenService.getToken();
 
@@ -49,7 +60,6 @@ export class AuthService {
       this.apiService.get('kraken/user')
         .toPromise()
         .then(response => {
-          console.log(response);
           this.set(response);
         })
         .catch(() => this.purge());
