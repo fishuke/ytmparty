@@ -1,9 +1,8 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {DOCUMENT} from '@angular/common';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {environment} from '../../../environments/environment';
 import {AuthService} from '../../core/services/auth.service';
+import {environment} from '../../../environments/environment';
 
 
 @Component({
@@ -19,17 +18,36 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.route.fragment.toPromise().then(fragment => {
-      console.log(fragment);
+    this.route.fragment.subscribe(fragment => {
+      if (fragment) {
+        const params = fragment.split('&');
+        if (params[0] && params[1] && params[2]) {
+          const token = params[0].slice(13);
+          const scopes = params[1].slice(6);
+          const tokenType = params[2].slice(11);
+          console.log({
+            token, scopes, tokenType
+          });
+          if (scopes !== 'user_read+chat:read') {
+            this.redirectToHome();
+          }
+          if (tokenType !== 'bearer') {
+            this.redirectToHome();
+          }
+          if (token){
+            this.auth.login(token);
+          }
+        } else {
+          this.redirectToHome();
+        }
+      } else {
+        this.redirectToHome();
+      }
     });
-    // this.route.queryParams
-    //   .subscribe(params => {
-    //       // if (params.code) {
-    //       //   this.auth.login(params.code);
-    //       // } else {
-    //       //   this.document.location.href = environment.DISCORD_OAUTH2_URL;
-    //       // }
-    //     }
-    //   );
+
+  }
+
+  redirectToHome(): void {
+    this.document.location.href = environment.ORIGIN;
   }
 }
