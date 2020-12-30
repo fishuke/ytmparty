@@ -21,4 +21,6 @@ export interface Message {
   content: string;
   author: string;
   color: string;
+  createdAt: number;
+  repeatCount: number;
 }
