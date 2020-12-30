@@ -3,6 +3,9 @@ import {AuthService} from '../../core/services/auth.service';
 import * as tmi from 'tmi.js';
 import {TokenService} from '../../core/services/token.service';
 import {Message} from '../../shared/interfaces';
+import * as moment from 'moment';
+import * as _ from 'lodash';
+import { last } from 'rxjs/operators';
 
 @Component({
   selector: 'app-dashboard',
@@ -21,7 +24,7 @@ export class DashboardComponent implements OnInit {
 
   async bootstrap(): Promise<void> {
     await this.auth.loginPromise();
-    const client = new tmi.Client({
+    const client = tmi.Client({
       connection: {
         secure: true,
         reconnect: true
@@ -33,13 +36,35 @@ export class DashboardComponent implements OnInit {
       channels: [this.auth.userState.name]
     });
     client.connect().catch(console.error);
+
+    // Adds
     client.on('message', (channel, tags, message, self) => {
-      console.log(tags);
-      this.messageArray.push({
-        content: message,
-        author: tags['display-name'],
-        color: tags.color
-      });
+
+      let isSentBefore = false;
+      const idx = _.findIndex(this.messageArray, { content: message });
+      if (idx > -1) isSentBefore = true;
+
+      if (isSentBefore) {
+        const lastMessage = this.messageArray[idx];
+    
+        this.messageArray.push({
+          content: message,
+          author: tags['display-name'],
+          color: tags.color,
+          createdAt: moment().unix(),
+          repeatCount: lastMessage.repeatCount+1
+        });
+
+        this.messageArray.splice(idx, 1);
+      } else {
+        this.messageArray.push({
+          content: message,
+          author: tags['display-name'],
+          color: tags.color,
+          createdAt: moment().unix(),
+          repeatCount: 1
+        });
+      }
     });
   }
 
