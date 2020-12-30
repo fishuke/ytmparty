@@ -10,7 +10,8 @@
     <mat-card-content>
       <mat-list>
         <mat-list-item *ngFor="let message of messageArray">
-          <span [style.color]="message.color">{{message.author}}</span>: {{message.content}}
+          <span [style.color]="message.color" >{{message.author}}</span>:
+          <span style="margin-left: 0.5rem;" [matBadgeHidden]="message.repeatCount === 1" [matBadge]="'x' + message.repeatCount">{{message.content}}</span>
         </mat-list-item>
       </mat-list>
     </mat-card-content>
