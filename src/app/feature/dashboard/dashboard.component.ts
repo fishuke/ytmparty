@@ -5,7 +5,6 @@ import {TokenService} from '../../core/services/token.service';
 import {Message} from '../../shared/interfaces';
 import * as moment from 'moment';
 import * as _ from 'lodash';
-import { last } from 'rxjs/operators';
 
 @Component({
   selector: 'app-dashboard',
@@ -19,18 +18,19 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // noinspection JSIgnoredPromiseFromCall
     this.bootstrap();
   }
 
   compareMessage(first: string, second: string): boolean {
-    first = first.replace(/\s+/g, "");
-    second = second.replace(/\s+/g, "");
+    first = first.replace(/\s+/g, '');
+    second = second.replace(/\s+/g, '');
 
-    if (!first.length && !second.length) return true;
-    if (!first.length || !second.length) return false;
-    if (first === second) return true;
-    if (first.length === 1 && second.length === 1) return false;
-    if (first.length < 2 || second.length < 2) return false;
+    if (!first.length && !second.length) { return true; }
+    if (!first.length || !second.length) { return false; }
+    if (first === second) { return true; }
+    if (first.length === 1 && second.length === 1) { return false; }
+    if (first.length < 2 || second.length < 2) { return false; }
 
     const letters = new Map();
     let intersectionSize = 0;
@@ -42,7 +42,7 @@ export class DashboardComponent implements OnInit {
         : 1;
 
       letters.set(letter, count);
-    };
+    }
 
     for (let i = 0; i < second.length - 1; i++) {
       const letter = second.substring(i, i + 2);
@@ -76,13 +76,13 @@ export class DashboardComponent implements OnInit {
     client.connect().catch(console.error);
 
     // Adds
-    client.on('message', (channel, tags, message, self) => {
+    client.on('message', (channel, tags, message) => {
 
       let isSentBefore = false;
       const idx = _.findIndex(this.messageArray, ({content}) => {
         return this.compareMessage(content, message);
       });
-      if (idx > -1) isSentBefore = true;
+      if (idx > -1) { isSentBefore = true; }
 
       if (isSentBefore) {
         const lastMessage = this.messageArray[idx];
@@ -92,7 +92,7 @@ export class DashboardComponent implements OnInit {
           author: tags['display-name'],
           color: tags.color,
           createdAt: moment().unix(),
-          repeatCount: lastMessage.repeatCount+1
+          repeatCount: lastMessage.repeatCount + 1
         });
 
         this.messageArray.splice(idx, 1);
@@ -108,18 +108,5 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  function similar(a,b) {
-    var equivalency = 0;
-    var minLength = (a.length > b.length) ? b.length : a.length;    
-    var maxLength = (a.length < b.length) ? b.length : a.length;    
-    for(var i = 0; i < minLength; i++) {
-        if(a[i] == b[i]) {
-            equivalency++;
-        }
-    }
-
-    var weight = equivalency / maxLength;
-    return (weight * 100);
-  }
 
 }
