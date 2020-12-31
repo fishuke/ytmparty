@@ -126,3 +126,7 @@ router-outlet {
 [disabled] {
   cursor: not-allowed !important;
 }
+
+button:focus{
+  outline: none !important;
+}
