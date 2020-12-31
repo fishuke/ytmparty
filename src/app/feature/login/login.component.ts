@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
             this.redirectToHome();
           }
           if (token){
-            this.auth.login(token).then(() => this.redirectToHome());
+            this.auth.login(token).then(() => this.redirectToDashboard());
           }
         } else {
           this.redirectToHome();
@@ -49,5 +49,8 @@ export class LoginComponent implements OnInit {
 
   redirectToHome(): void {
     this.document.location.href = environment.ORIGIN;
+  }
+  redirectToDashboard(): void {
+    this.document.location.href = `${environment.ORIGIN}/dashboard`;
   }
 }
