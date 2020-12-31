@@ -7,28 +7,28 @@ import {AuthGuard} from '@core/guards/auth.guard';
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'dashboard',
     component: LayoutComponent,
     children: [
       {
-        path: 'login',
-        loadChildren: () => import('./feature/login/login.module').then(m => m.LoginModule),
-        canActivate: [NonAuthGuard],
-      },
-      {
-        path: 'dashboard',
+        path: '',
         loadChildren: () => import('./feature/dashboard/dashboard.module').then(m => m.DashboardModule),
         canActivate: [AuthGuard],
       },
-      {
-        path: 'landing',
-        loadChildren: () => import('./feature/landing/landing.module').then(m => m.LandingModule)
-      },
-      {
-        path: '**',
-        redirectTo: 'landing'
-      }
     ]
+  },
+  {
+    path: 'landing',
+    loadChildren: () => import('./feature/landing/landing.module').then(m => m.LandingModule)
+  },
+  {
+    path: 'login',
+    loadChildren: () => import('./feature/login/login.module').then(m => m.LoginModule),
+    canActivate: [NonAuthGuard],
+  },
+  {
+    path: '**',
+    redirectTo: 'landing'
   }
 ];
 
