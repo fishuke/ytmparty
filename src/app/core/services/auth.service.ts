@@ -61,6 +61,7 @@ export class AuthService {
         .toPromise()
         .then(response => {
           this.set(response);
+          console.log(response);
         })
         .catch(() => this.purge());
     } else {
@@ -79,6 +80,11 @@ export class AuthService {
     this.userStateSubject.next(null);
     this.isLoggedInSubject.next(false);
     // this.router.navigate(['/']).then(() => this.snack.default('Successfully logged out.'));
+  }
+
+  logout(): void {
+    this.purge();
+    this.router.navigate(['/']).then(() => this.snack.default('Logged out successfully.'));
   }
 
   async login(token: string): Promise<any> {
