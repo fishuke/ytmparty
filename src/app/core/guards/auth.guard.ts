@@ -1,7 +1,9 @@
 import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router} from '@angular/router';
-import {Injectable} from '@angular/core';
+import {Inject, Injectable} from '@angular/core';
 import {AuthService} from '@core/services/auth.service';
 import {TokenService} from '@core/services/token.service';
+import {environment} from '../../../environments/environment';
+import {DOCUMENT} from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +11,7 @@ import {TokenService} from '@core/services/token.service';
 export class AuthGuard implements CanActivate {
 
   constructor(
+    @Inject(DOCUMENT) private document: Document,
     private router: Router,
     private authService: AuthService,
     private tokenService: TokenService
@@ -20,8 +23,7 @@ export class AuthGuard implements CanActivate {
     if (this.tokenService.getToken()) {
       return true;
     }
-
-    this.router.navigate(['/login']);
+    this.document.location.href = this.authService.oauth2URL;
     return false;
   }
 }
