@@ -14,7 +14,7 @@ import * as _ from 'lodash';
 export class DashboardComponent implements OnInit {
   messageArray: Message[] = [];
 
-  constructor(private auth: AuthService, private token: TokenService) {
+  constructor(public auth: AuthService, private token: TokenService) {
   }
 
   ngOnInit(): void {
