@@ -5,14 +5,14 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     return true;
   }
 });
-navigator.mediaSession.setActionHandler("play", async () => {
+navigator.mediaSession.setActionHandler('play', async () => {
   console.log('played');
-  await document.querySelector("video").play();
-  navigator.mediaSession.playbackState = "playing";
+  await document.querySelector('video').play();
+  navigator.mediaSession.playbackState = 'playing';
 });
 
-navigator.mediaSession.setActionHandler("pause", () => {
+navigator.mediaSession.setActionHandler('pause', () => {
   console.log('paused');
-  document.querySelector("video").pause();
-  navigator.mediaSession.playbackState = "paused";
+  document.querySelector('video').pause();
+  navigator.mediaSession.playbackState = 'paused';
 });
