@@ -1,0 +1,41 @@
+{
+  "name": "Youtube Music Party",
+  "version": "1.0",
+  "description": "Listen music together with your friends in Youtube Music.",
+  "manifest_version": 2,
+  "permissions": [
+    "activeTab",
+    "tabs",
+    "declarativeContent",
+    "webNavigation",
+    "webRequest",
+    "storage",
+    "https://music.youtube.com/*"
+  ],
+  "background": {
+    "scripts": [
+      "background.js",
+      "runtime.js"
+    ]
+  },
+  "content_scripts": [ {
+    "all_frames": true,
+    "js": [ "script.js", "runtime.js" ],
+    "matches": [ "https://music.youtube.com/*" ],
+    "run_at": "document_end"
+  } ],
+  "icons": {
+    "16": "assets/icon.png",
+    "48": "assets/icon.png",
+    "128": "assets/icon.png"
+  },
+  "browser_action": {
+    "default_icon": "assets/icon.png",
+    "icons": {
+      "16": "assets/icon.png",
+      "48": "assets/icon.png",
+      "128": "assets/icon.png"
+    },
+    "default_popup": "index.html"
+  }
+}

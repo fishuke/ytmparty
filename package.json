@@ -1,43 +1,44 @@
 {
-  "name": "better-chat",
+  "name": "ytmparty",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "start:dev": "ng serve --port 4200",
-    "build": "ng build --prod",
-    "test": "ng test",
-    "lint": "ng lint",
-    "e2e": "ng e2e"
+    "start:server": "nodemon ytmparty-backend/app.js",
+    "start:dev": "ng serve",
+    "start:build": "ng serve --build",
+    "build": "ng build",
+    "lint": "ng lint"
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "^11.0.5",
+    "@angular/animations": "~11.0.5",
     "@angular/cdk": "^11.0.3",
     "@angular/common": "~11.0.5",
     "@angular/compiler": "~11.0.5",
     "@angular/core": "~11.0.5",
-    "@angular/flex-layout": "^11.0.0-beta.33",
     "@angular/forms": "~11.0.5",
     "@angular/material": "^11.0.3",
     "@angular/platform-browser": "~11.0.5",
     "@angular/platform-browser-dynamic": "~11.0.5",
-    "@angular/router": "~11.0.5",
-    "@mdi/font": "^5.8.55",
-    "lodash": "^4.17.20",
-    "moment": "^2.29.1",
-    "ngx-moment": "^5.0.0",
     "rxjs": "~6.6.3",
-    "tmi.js": "^1.7.1",
     "tslib": "^2.0.3",
-    "zone.js": "~0.11.3"
+    "zone.js": "~0.11.3",
+    "cookie-parser": "~1.4.4",
+    "cors": "^2.8.5",
+    "debug": "~2.6.9",
+    "express": "~4.16.1",
+    "morgan": "~1.9.1",
+    "socket.io": "^3.0.5"
   },
   "devDependencies": {
+    "@angular-builders/custom-webpack": "^11.0.0",
     "@angular-devkit/build-angular": "~0.1100.5",
     "@angular/cli": "~11.0.5",
     "@angular/compiler-cli": "~11.0.5",
+    "@types/node": "^14.14.17",
     "@types/jasmine": "~3.6.2",
     "@types/jasminewd2": "~2.0.8",
+    "@types/chrome": "0.0.127",
     "codelyzer": "^6.0.1",
     "jasmine-core": "~3.6.0",
     "jasmine-spec-reporter": "~6.0.0",
@@ -49,6 +50,7 @@
     "protractor": "~7.0.0",
     "ts-node": "~9.1.1",
     "tslint": "~6.1.0",
-    "typescript": "~4.0.0"
+    "typescript": "~4.0.0",
+    "nodemon": "^2.0.6"
   }
 }

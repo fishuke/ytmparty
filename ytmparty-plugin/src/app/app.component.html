@@ -1,0 +1,19 @@
+<main class="layout"
+      style="display: flex; justify-content: center; flex-direction: column; align-items: center; padding: 1.5rem;">
+
+  <h1 style="text-align: center">Youtube Music Party!</h1>
+
+  <h3 style="text-align: center">Join Party</h3>
+  <mat-form-field style="width: 100%" appearance="outline">
+    <mat-label>Join Party</mat-label>
+    <input matInput placeholder="Party Code">
+  </mat-form-field>
+  <button color="accent" mat-raised-button (click)="onJoinPartyButtonClick()" style="width: 100%">Join</button>
+
+
+  <h3 style="text-align: center">Create Party</h3>
+  <button color="accent" mat-raised-button (click)="onCreatePartyButtonClick()" style="width: 100%"> Create</button>
+
+  <h2>Party Code: {{partyCode ? partyCode : 'You are not in any party yet.'}}</h2>
+  <h2 *ngIf="error" style="color: red">Error: {{error}}</h2><br>
+</main>
