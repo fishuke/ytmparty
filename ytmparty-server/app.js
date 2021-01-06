@@ -20,6 +20,10 @@ io.on('connection', (socket) => {
         socket.join(socket.id);
     })
 
+    socket.on('joinRoom' (msg) => {
+        socket.join(msg);
+    })
+
     socket.on('message', (msg) => {
         console.log('message: ' + msg);
     });
