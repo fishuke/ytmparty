@@ -16,6 +16,10 @@ app.get('/', (req, res) => {
 
 io.on('connection', (socket) => {
     socket.join('fishuke');
+    socket.on('createRoom' (msg) => {
+        socket.join(socket.id);
+    })
+
     socket.on('message', (msg) => {
         console.log('message: ' + msg);
     });
