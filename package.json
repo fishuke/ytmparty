@@ -3,9 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start:server": "nodemon ytmparty-backend/app.js",
-    "start:plugin:dev": "cd ytmparty-plugin && ng serve",
-    "start:plugin:build": "cd ytmparty-plugin && ng build --watch",
+    "start:server": "nodemon ytmparty-server/app.js",
+    "start:plugin": "cd ytmparty-plugin && ng build --watch",
     "build": "cd ytmparty-plugin && ng build --prod",
     "lint": "cd ytmparty-plugin && ng lint"
   },
