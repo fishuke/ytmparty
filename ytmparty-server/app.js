@@ -16,11 +16,11 @@ app.get('/', (req, res) => {
 
 io.on('connection', (socket) => {
     socket.join('fishuke');
-    socket.on('createRoom' (msg) => {
+    socket.on('createRoom', (msg) => {
         socket.join(socket.id);
     })
 
-    socket.on('joinRoom' (msg) => {
+    socket.on('joinRoom', (msg) => {
         socket.join(msg);
     })
 
