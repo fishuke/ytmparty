@@ -22,16 +22,18 @@ class ContentScript {
 
   }
 
+
+  /**
+   * @param listeners can be following variables
+   * abort canplay canplaythrough durationchange emptied encrypted ended error interruptbegin
+   * loadeddata loadedmetadata loadstart mozaudioavailable pause interruptend play playing
+   * progress ratechange seeked seeking stalled suspend timeupdate volumechange waiting
+   */
   addMultiListeners(element, listeners, fn): void {
     listeners.split(' ').forEach(e => element.addEventListener(e, fn, false));
   }
 
   addEventListeners(): void {
-    /**
-     * listeners abort canplay canplaythrough durationchange emptied encrypted ended error interruptbegin interruptend play playing
-     * loadeddata loadedmetadata loadstart mozaudioavailable pause
-     * progress ratechange seeked seeking stalled suspend timeupdate volumechange waiting
-     */
     this.addMultiListeners(this.video, 'pause play seeking seeked loadedmetadata', (e) => {
       if (e.type === 'pause') {
         this.socket.emit('message', 'pause');
