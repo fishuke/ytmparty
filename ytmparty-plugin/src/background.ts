@@ -16,10 +16,7 @@ class Background {
   });
 
   constructor() {
-    this.socket = io(environment.socket);
-    this.socket.on('connect', () => {
-      console.log('connected');
-    });
+    this.connectToWebsocket();
     this.listenMessages();
   }
 
@@ -28,6 +25,13 @@ class Background {
       (request, sender, sendResponse) => {
         console.log(request);
       });
+  }
+
+  connectToWebsocket(): void {
+    this.socket = io(environment.socket);
+    this.socket.on('connect', () => {
+      console.log('connected');
+    });
   }
 
 }
