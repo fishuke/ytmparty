@@ -24,6 +24,8 @@ class ContentScript {
 
 
   /**
+   * @param element video element
+   * @param fn returning listeners
    * @param listeners can be following variables
    * abort canplay canplaythrough durationchange emptied encrypted ended error interruptbegin
    * loadeddata loadedmetadata loadstart mozaudioavailable pause interruptend play playing
@@ -53,9 +55,9 @@ class ContentScript {
           this.socket.emit('message', 'advertisement');
           console.log('advertisement');
         } else {
-          // tslint:disable-next-line
           this.socket.emit('message', {
-            'next track': navigator['mediaSession'].metadata,
+            // tslint:disable-next-line
+            'next track': navigator.mediaSession.metadata,
             url: window.location.href.split('&')[0]
           });
           // tslint:disable-next-line
@@ -65,7 +67,7 @@ class ContentScript {
     });
   }
 
-  findVideoQuery(){
+  findVideoQuery(): void{
     const myInterval = setInterval(() => {
       this.video = document.querySelector('video');
       if (this.video) {
@@ -77,6 +79,7 @@ class ContentScript {
 
 }
 
-new ContentScript()
+// tslint:disable-next-line:no-unused-expression
+new ContentScript();
 
 
