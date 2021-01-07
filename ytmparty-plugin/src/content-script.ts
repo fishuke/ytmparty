@@ -1,28 +1,9 @@
-import * as io from 'socket.io-client';
-import {environment} from './environments/environment';
-
-
 class ContentScript {
   video;
-  socket;
 
   constructor() {
-    this.socket = io(environment.socket);
-    this.socket.on('connect', () => {
-      console.log('connected');
-    });
-
-    chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-      console.log({request});
-      if (request.msg) {
-        sendResponse({msg: 'response'});
-        return true;
-      }
-    });
-
-    this.addEventListeners();
+    this.findVideoQuery();
   }
-
 
   /**
    * @param element video element
@@ -38,34 +19,28 @@ class ContentScript {
 
   addEventListeners(): void {
     this.addMultiListeners(this.video, 'pause play seeking seeked loadedmetadata', (e) => {
-      if (e.type === 'pause') {
-        chrome.runtime.sendMessage({event: 'pause'}, response => {
-          console.log('Response: ', response);
-        });
-        console.log('pause');
-      } else if (e.type === 'play') {
-        this.socket.emit('message', 'play');
-        console.log('play');
-      } else if (e.type === 'seeking') {
-        this.socket.emit('message', 'play');
-        console.log({'seeking to': e.timeStamp});
-      } else if (e.type === 'seeked') {
-        this.socket.emit('message', 'play');
-        console.log({'seeked to': e.timeStamp});
-      } else if (e.type === 'loadedmetadata') {
-        // @ts-ignore
-        if (navigator.mediaSession.metadata.artwork[0].src.includes('https://i.ytimg.com/')) {
-          this.socket.emit('message', 'advertisement');
-          console.log('advertisement');
-        } else {
-          this.socket.emit('message', {
-            // tslint:disable-next-line
-            'next track': navigator.mediaSession.metadata,
-            url: window.location.href.split('&')[0]
-          });
-          // tslint:disable-next-line
-          console.log({'next track': navigator['mediaSession'].metadata, url: window.location.href.split('&')[0]});
-        }
+
+
+      switch (e.type) {
+        case 'pause':
+          chrome.runtime.sendMessage({event: 'pause'});
+          break;
+        case 'play':
+          chrome.runtime.sendMessage({event: 'play'});
+          break;
+        case 'seeking':
+          chrome.runtime.sendMessage({event: 'seeking'});
+          break;
+        case 'seeked':
+          chrome.runtime.sendMessage({event: 'seeked'});
+          break;
+        case 'loadedmetadata':
+          if (navigator.mediaSession.metadata.artwork[0].src.includes('https://i.ytimg.com/')) {
+            chrome.runtime.sendMessage({event: 'advertisement'});
+          } else {
+            chrome.runtime.sendMessage({event: 'nextTrack', url: window.location.href.split('&')[0]});
+          }
+          break;
       }
     });
   }
