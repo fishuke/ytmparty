@@ -35,16 +35,14 @@ export class AppComponent {
   }
 
   async checkIfCurrentTabIsCorrect(): Promise<boolean> {
-    let isCurrentTabIsCorrect: boolean;
-    await chrome.tabs.query({active: true, currentWindow: true}, async (tabs) => {
+    await chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
       if (!tabs[0].url.includes('https://music.youtube.com')) {
         this.error = 'This extension is only usable in youtube music.';
-        isCurrentTabIsCorrect = false;
+        return false;
       } else {
-        isCurrentTabIsCorrect = true;
+        return true;
       }
     });
-    return isCurrentTabIsCorrect;
   }
 
 }
