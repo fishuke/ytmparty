@@ -1,6 +1,6 @@
 module.exports = {
   entry: {
-    script: 'src/script.ts',
+    'content-script': 'src/content-script.ts',
     background: 'src/background.ts'
   },
 }
