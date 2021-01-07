@@ -4,8 +4,9 @@ const http = require('http').createServer(app);
 // noinspection JSValidateTypes
 const io = require('socket.io')(http, {
     cors: {
-        origin: "*",
-        methods: ["GET", "POST"]
+        origin: "https://music.youtube.com",
+        methods: ["GET", "POST"],
+        credentials: true
     }
 });
 
