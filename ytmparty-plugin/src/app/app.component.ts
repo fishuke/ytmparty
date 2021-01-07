@@ -33,7 +33,7 @@ export class AppComponent {
       });
     });
   }
-223
+
   async checkIfCurrentTabIsCorrect(): Promise<boolean> {
     let isCurrentTabIsCorrect: boolean;
     await chrome.tabs.query({active: true, currentWindow: true}, async (tabs) => {
