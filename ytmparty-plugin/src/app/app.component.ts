@@ -10,10 +10,13 @@ export class AppComponent {
   public response;
   public error;
 
-  constructor() {}
+
+
+  constructor() {
+  }
 
   async onCreatePartyButtonClick(): Promise<void> {
-    if (!await this.checkIfCurrentTabIsCorrect()) {
+    if (!await this.checkIfCurrentTabIsCorrect) {
       return;
     }
     await chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
@@ -24,24 +27,13 @@ export class AppComponent {
   }
 
   async onJoinPartyButtonClick(): Promise<void> {
-    if (!await this.checkIfCurrentTabIsCorrect()) {
+    if (!await this.checkIfCurrentTabIsCorrect) {
       return;
     }
     await chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
       chrome.tabs.sendMessage(tabs[0].id, {msg: 'joinParty', partyCode: this.partyCode}, response => {
         this.response = response.msg;
       });
-    });
-  }
-
-  async checkIfCurrentTabIsCorrect(): Promise<boolean> {
-    await chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
-      if (!tabs[0].url.includes('https://music.youtube.com')) {
-        this.error = 'This extension is only usable in youtube music.';
-        return false;
-      } else {
-        return true;
-      }
     });
   }
 
