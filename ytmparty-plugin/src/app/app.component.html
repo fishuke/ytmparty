@@ -6,7 +6,7 @@
   <h3 style="text-align: center">Join Party</h3>
   <mat-form-field style="width: 100%" appearance="outline">
     <mat-label>Join Party</mat-label>
-    <input matInput placeholder="Party Code">
+    <input matInput [value]="value" placeholder="Party Code">
   </mat-form-field>
   <button color="accent" mat-raised-button (click)="onJoinPartyButtonClick()" style="width: 100%">Join</button>
 
@@ -14,6 +14,6 @@
   <h3 style="text-align: center">Create Party</h3>
   <button color="accent" mat-raised-button (click)="onCreatePartyButtonClick()" style="width: 100%"> Create</button>
 
-  <h2>Party Code: {{partyCode ? partyCode : 'You are not in any party yet.'}}</h2>
+  <h2>Party Code: {{joinedPartyCode ? joinedPartyCode : ''}}</h2>
   <h2 *ngIf="error" style="color: red">Error: {{error}}</h2><br>
 </main>
