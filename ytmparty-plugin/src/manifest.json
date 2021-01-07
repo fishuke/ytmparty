@@ -20,7 +20,7 @@
   },
   "content_scripts": [ {
     "all_frames": true,
-    "js": [ "script.js", "runtime.js" ],
+    "js": [ "content-script.js", "runtime.js" ],
     "matches": [ "https://music.youtube.com/*" ],
     "run_at": "document_end"
   } ],
