@@ -1,6 +1,15 @@
 
 class Background {
   isInParty: boolean;
+  checkYtmTab: Promise<boolean> = new Promise((resolve, reject) => {
+    chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
+      if (!tabs[0].url.includes('https://music.youtube.com')) {
+        reject('Youtube music tab not found.');
+      } else {
+        resolve(true);
+      }
+    });
+  });
 
   constructor() {
     this.listenMessages();
