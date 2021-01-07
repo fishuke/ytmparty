@@ -6,35 +6,29 @@ import {Component} from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  public partyCode;
+  public joinedPartyCode;
   public response;
   public error;
-
-
+  public value;
+  private editorExtensionId = 'oononiaicnkfdebjkpfabepkggkneeep';
 
   constructor() {
   }
 
-  async onCreatePartyButtonClick(): Promise<void> {
-    if (!await this.checkIfCurrentTabIsCorrect) {
-      return;
-    }
-    await chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
-      chrome.tabs.sendMessage(tabs[0].id, {msg: 'createParty'}, response => {
-        this.response = response.msg;
+  async onJoinPartyButtonClick(): Promise<void> {
+    chrome.runtime.sendMessage(this.editorExtensionId, {event: 'joinParty', partyCode: this.value},
+      response => {
+        response.response('test');
+        console.log(response);
       });
-    });
   }
 
-  async onJoinPartyButtonClick(): Promise<void> {
-    if (!await this.checkIfCurrentTabIsCorrect) {
-      return;
-    }
-    await chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
-      chrome.tabs.sendMessage(tabs[0].id, {msg: 'joinParty', partyCode: this.partyCode}, response => {
-        this.response = response.msg;
+  async onCreatePartyButtonClick(): Promise<void> {
+    chrome.runtime.sendMessage(this.editorExtensionId, {event: 'createParty'},
+      response => {
+        response.response('test');
+        console.log(response);
       });
-    });
   }
 
 }
