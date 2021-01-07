@@ -18,7 +18,6 @@ export class AppComponent {
   async onJoinPartyButtonClick(): Promise<void> {
     chrome.runtime.sendMessage(this.editorExtensionId, {event: 'joinParty', partyCode: this.value},
       response => {
-        response.response('test');
         console.log(response);
       });
   }
@@ -26,7 +25,6 @@ export class AppComponent {
   async onCreatePartyButtonClick(): Promise<void> {
     chrome.runtime.sendMessage(this.editorExtensionId, {event: 'createParty'},
       response => {
-        response.response('test');
         console.log(response);
       });
   }
