@@ -1,7 +1,7 @@
 const cors = require("cors");
 const app = require('express')();
 const http = require('http').createServer(app);
-// noinspection JSValidateTypes
+const nanoid = require('nanoid');
 const io = require('socket.io')(http, {
     cors: {
         origin: "https://music.youtube.com",
@@ -19,6 +19,8 @@ app.get('/', (req, res) => {
 
 io.on('connection', (socket) => {
     socket.on('createRoom', () => {
+
+        const id = nanoid(10);
         console.log(socket);
         console.log(socket.id);
         socket.join(socket.id);
