@@ -4,7 +4,7 @@ const http = require('http').createServer(app);
 const nanoid = require('nanoid');
 const io = require('socket.io')(http, {
     cors: {
-        origin: "https://music.youtube.com",
+        origin: "chrome-extension://oononiaicnkfdebjkpfabepkggkneeep",
         methods: ["GET", "POST"],
         credentials: true
     }
