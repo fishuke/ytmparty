@@ -1,4 +1,4 @@
-{
+  {
   "name": "ytmparty",
   "version": "0.0.0",
   "scripts": {
@@ -19,25 +19,27 @@
     "@angular/material": "^11.0.3",
     "@angular/platform-browser": "~11.0.5",
     "@angular/platform-browser-dynamic": "~11.0.5",
-    "rxjs": "~6.6.3",
-    "tslib": "^2.0.3",
-    "zone.js": "~0.11.3",
     "cookie-parser": "~1.4.4",
     "cors": "^2.8.5",
     "debug": "~2.6.9",
     "express": "~4.16.1",
     "morgan": "~1.9.1",
-    "socket.io": "^3.0.5"
+    "nanoid": "^3.1.20",
+    "rxjs": "~6.6.3",
+    "socket.io": "^3.0.5",
+    "tslib": "^2.0.3",
+    "zone.js": "~0.11.3"
   },
   "devDependencies": {
     "@angular-builders/custom-webpack": "^11.0.0",
     "@angular-devkit/build-angular": "~0.1100.5",
     "@angular/cli": "~11.0.5",
     "@angular/compiler-cli": "~11.0.5",
-    "@types/node": "^14.14.17",
+    "@types/chrome": "0.0.127",
     "@types/jasmine": "~3.6.2",
     "@types/jasminewd2": "~2.0.8",
-    "@types/chrome": "0.0.127",
+    "@types/node": "^14.14.17",
+    "@types/socket.io": "^2.1.12",
     "codelyzer": "^6.0.1",
     "jasmine-core": "~3.6.0",
     "jasmine-spec-reporter": "~6.0.0",
@@ -46,10 +48,10 @@
     "karma-coverage-istanbul-reporter": "~3.0.3",
     "karma-jasmine": "~4.0.1",
     "karma-jasmine-html-reporter": "^1.5.4",
+    "nodemon": "^2.0.6",
     "protractor": "~7.0.0",
     "ts-node": "~9.1.1",
     "tslint": "~6.1.0",
-    "typescript": "~4.0.0",
-    "nodemon": "^2.0.6"
+    "typescript": "~4.0.0"
   }
 }
