@@ -1,10 +1,14 @@
+import * as io from 'socket.io-client';
+import {environment} from './environments/environment';
 
 class Background {
   isInParty: boolean;
+  socket;
+
   checkYtmTab: Promise<boolean> = new Promise((resolve, reject) => {
     chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
       if (!tabs[0].url.includes('https://music.youtube.com')) {
-        reject('Youtube music tab not found.');
+        resolve(false);
       } else {
         resolve(true);
       }
@@ -12,14 +16,23 @@ class Background {
   });
 
   constructor() {
-    this.listenMessages();
+    this.socket = io(environment.socket);
+    this.socket.on('connect', () => {
+      console.log('connected');
+    });
+    chrome.runtime.onMessage.addListener(
+      (request, sender, sendResponse) => {
+        console.log(request);
+        sendResponse('hi');
+      });
+    chrome.runtime.onMessageExternal.addListener(
+      (request, sender, sendResponse) => {
+        console.log(request);
+        sendResponse('hi');
+      });
   }
 
   listenMessages(): void {
-    chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
-      console.log('Received %o from %o, frame', msg, sender.tab, sender.frameId);
-      sendResponse('Gotcha!');
-    });
   }
 
 }
