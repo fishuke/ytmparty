@@ -1,13 +1,15 @@
 const cors = require("cors");
 const app = require('express')();
 const http = require('http').createServer(app);
+// noinspection JSValidateTypes
 const io = require('socket.io')(http, {
     cors: {
         origin: "*",
-            methods: ["GET", "POST"]
+        methods: ["GET", "POST"]
     }
 });
 
+// noinspection JSCheckFunctionSignatures
 app.use(cors())
 
 app.get('/', (req, res) => {
@@ -15,8 +17,9 @@ app.get('/', (req, res) => {
 });
 
 io.on('connection', (socket) => {
-    socket.join('fishuke');
-    socket.on('createRoom', (msg) => {
+    socket.on('createRoom', () => {
+        console.log(socket);
+        console.log(socket.id);
         socket.join(socket.id);
     })
 
@@ -30,6 +33,8 @@ io.on('connection', (socket) => {
     console.log('a user connected');
 });
 
-http.listen(3000, () => {
+http.listen(3000, bootstrap);
+
+function bootstrap() {
     console.log('listening on *:3000');
-});
+}
