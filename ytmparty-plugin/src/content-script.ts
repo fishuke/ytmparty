@@ -20,6 +20,7 @@ class ContentScript {
       }
     });
 
+    this.addEventListeners();
   }
 
 
@@ -38,7 +39,9 @@ class ContentScript {
   addEventListeners(): void {
     this.addMultiListeners(this.video, 'pause play seeking seeked loadedmetadata', (e) => {
       if (e.type === 'pause') {
-        this.socket.emit('message', 'pause');
+        chrome.runtime.sendMessage({event: 'pause'}, response => {
+          console.log('Response: ', response);
+        });
         console.log('pause');
       } else if (e.type === 'play') {
         this.socket.emit('message', 'play');
@@ -67,7 +70,7 @@ class ContentScript {
     });
   }
 
-  findVideoQuery(): void{
+  findVideoQuery(): void {
     const myInterval = setInterval(() => {
       this.video = document.querySelector('video');
       if (this.video) {
