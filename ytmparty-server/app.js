@@ -20,14 +20,17 @@ app.get('/', (req, res) => {
 io.on('connection', (socket) => {
     socket.on('createRoom', () => {
 
-        const id = nanoid(10);
-        console.log(socket);
-        console.log(socket.id);
-        socket.join(socket.id);
+        const roomID = nanoid(8);
+        socket.join(roomID);
+        socket.emit({joinedRoom: roomID});
     })
 
-    socket.on('joinRoom', (msg) => {
-        socket.join(msg);
+    socket.on('joinRoom', (roomID) => {
+        if(socket.rooms.get(roomID).size === 0){
+            return socket.emit({error: 'Room not found or empty'});
+        }
+        socket.join(roomID);
+        socket.emit({joinedRoom: roomID});
     })
 
     socket.on('message', (msg) => {
