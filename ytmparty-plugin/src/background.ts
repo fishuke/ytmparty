@@ -20,19 +20,14 @@ class Background {
     this.socket.on('connect', () => {
       console.log('connected');
     });
-    chrome.runtime.onMessage.addListener(
-      (request, sender, sendResponse) => {
-        console.log(request);
-        sendResponse('hi');
-      });
-    chrome.runtime.onMessageExternal.addListener(
-      (request, sender, sendResponse) => {
-        console.log(request);
-        sendResponse('hi');
-      });
+    this.listenMessages();
   }
 
   listenMessages(): void {
+    chrome.runtime.onMessage.addListener(
+      (request, sender, sendResponse) => {
+        console.log(request);
+      });
   }
 
 }
