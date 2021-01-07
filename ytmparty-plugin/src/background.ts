@@ -7,8 +7,9 @@ class Background {
   }
 
   listenMessages(): void {
-    chrome.runtime.onMessage.addListener((request, callback) => {
-      console.log(request);
+    chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
+      console.log('Received %o from %o, frame', msg, sender.tab, sender.frameId);
+      sendResponse('Gotcha!');
     });
   }
 
