@@ -1,6 +1,5 @@
-const http = require('http').createServer();
 const nanoid = require('nanoid');
-const io = require('socket.io')(http, {
+const io = require('socket.io')({
     cors: {
         origin: "chrome-extension://oononiaicnkfdebjkpfabepkggkneeep",
         credentials: true
@@ -30,7 +29,7 @@ io.on('connection', (socket) => {
     });
 });
 
-http.listen(3000, bootstrap);
+io.listen(3000, bootstrap);
 
 function bootstrap() {
     console.log('listening on *:3000');
