@@ -5,7 +5,6 @@ const nanoid = require('nanoid');
 const io = require('socket.io')(http, {
     cors: {
         origin: "chrome-extension://oononiaicnkfdebjkpfabepkggkneeep",
-        methods: ["GET", "POST"],
         credentials: true
     }
 });
@@ -17,20 +16,26 @@ app.get('/', (req, res) => {
     res.send('hello world!');
 });
 
-io.on('connection', (socket) => {
-    socket.on('createRoom', () => {
+io.on('connect', (socket) => {
+    console.log('connected');
+})
 
-        const roomID = nanoid(8);
+io.on('connection', (socket) => {
+    console.log(socket.id + 'connected.');
+    socket.on('createRoom', () => {
+        console.log('createRoom');
+        const roomID = nanoid.nanoid(8);
         socket.join(roomID);
-        socket.emit({joinedRoom: roomID});
+        console.log('joinedRoom ' + roomID);
+        socket.emit('joinedRoom', roomID);
     })
 
     socket.on('joinRoom', (roomID) => {
         if(socket.rooms.get(roomID).size === 0){
-            return socket.emit({error: 'Room not found or empty'});
+            return socket.emit(error, 'Room not found or empty');
         }
         socket.join(roomID);
-        socket.emit({joinedRoom: roomID});
+        socket.emit('joinedRoom', roomID);
     })
 
     socket.on('message', (msg) => {
