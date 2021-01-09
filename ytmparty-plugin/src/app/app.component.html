@@ -1,24 +1,27 @@
 <main>
 
-  <section *ngIf="!IsInParty" class="layout">
+  <section *ngIf="!isInParty" class="layout">
     <h1 style="text-align: center">Youtube Music Party!</h1>
 
-    <h3 style="text-align: center">Join Party</h3>
     <mat-form-field style="width: 100%" appearance="outline">
       <mat-label>Join Party</mat-label>
-      <input matInput [value]="value" placeholder="Party Code">
+      <label>
+        <input matInput [formControl]="partyCode" placeholder="Party Code">
+      </label>
+      <mat-error *ngIf="partyCode.invalid">Not a valid party code</mat-error>
     </mat-form-field>
 
-    <button color="accent" mat-raised-button (click)="onJoinPartyButtonClick()" style="width: 100%">Join</button>
+    <button color="accent" [disabled]="partyCode.value ? partyCode.invalid : true" mat-raised-button (click)="onJoinPartyButtonClick()" style="width: 100%">Join</button>
 
-    <h3 style="text-align: center">Create Party</h3>
+    <h3>or</h3>
+
     <button color="accent" mat-raised-button (click)="onCreatePartyButtonClick()" style="width: 100%"> Create</button>
   </section>
 
-  <section *ngIf="IsInParty" class="layout">
+  <section *ngIf="isInParty === true" class="layout">
     <h2>Party Code: {{joinedPartyCode ? joinedPartyCode : ''}}</h2>
 
-    <button color="accent" mat-raised-button (click)="onCreatePartyButtonClick()" style="width: 100%"> Create</button>
+    <button color="warn" mat-raised-button (click)="onLeavePartyButtonClick()" style="width: 100%"> Leave Party</button>
 
   </section>
 
