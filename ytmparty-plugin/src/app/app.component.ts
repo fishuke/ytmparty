@@ -9,7 +9,7 @@ export class AppComponent {
   public joinedPartyCode;
   public response;
   public error;
-  public value;
+  public value = '';
   private editorExtensionId = 'oononiaicnkfdebjkpfabepkggkneeep';
 
   constructor() {
