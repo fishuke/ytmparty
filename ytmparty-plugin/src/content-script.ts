@@ -1,5 +1,6 @@
 class ContentScript {
   video;
+  editorExtensionId = 'oononiaicnkfdebjkpfabepkggkneeep';
 
   constructor() {
     this.findVideoQuery();
@@ -23,22 +24,19 @@ class ContentScript {
 
       switch (e.type) {
         case 'pause':
-          chrome.runtime.sendMessage({event: 'pause'});
+          chrome.runtime.sendMessage(this.editorExtensionId, {event: 'pause'});
           break;
         case 'play':
-          chrome.runtime.sendMessage({event: 'play'});
-          break;
-        case 'seeking':
-          chrome.runtime.sendMessage({event: 'seeking'});
+          chrome.runtime.sendMessage(this.editorExtensionId, {event: 'play'});
           break;
         case 'seeked':
-          chrome.runtime.sendMessage({event: 'seeked'});
+          chrome.runtime.sendMessage(this.editorExtensionId, {event: 'seeked'});
           break;
         case 'loadedmetadata':
           if (navigator.mediaSession.metadata.artwork[0].src.includes('https://i.ytimg.com/')) {
-            chrome.runtime.sendMessage({event: 'advertisement'});
+            chrome.runtime.sendMessage(this.editorExtensionId, {event: 'advertisement'});
           } else {
-            chrome.runtime.sendMessage({event: 'nextTrack', url: window.location.href.split('&')[0]});
+            chrome.runtime.sendMessage(this.editorExtensionId, {event: 'nextTrack', url: window.location.href.split('&')[0]});
           }
           break;
       }
