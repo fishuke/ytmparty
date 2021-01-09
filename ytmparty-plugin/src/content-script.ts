@@ -19,7 +19,7 @@ class ContentScript {
   }
 
   addEventListeners(): void {
-    this.addMultiListeners(this.video, 'pause play seeking seeked loadedmetadata', (e) => {
+    this.addMultiListeners(this.video, 'pause play seeked loadedmetadata', (e) => {
 
 
       switch (e.type) {
