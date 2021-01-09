@@ -1,6 +1,4 @@
-const cors = require("cors");
-const app = require('express')();
-const http = require('http').createServer(app);
+const http = require('http').createServer();
 const nanoid = require('nanoid');
 const io = require('socket.io')(http, {
     cors: {
@@ -9,19 +7,8 @@ const io = require('socket.io')(http, {
     }
 });
 
-// noinspection JSCheckFunctionSignatures
-app.use(cors())
-
-app.get('/', (req, res) => {
-    res.send('hello world!');
-});
-
-io.on('connect', (socket) => {
-    console.log('connected');
-})
-
 io.on('connection', (socket) => {
-    console.log(socket.id + 'connected.');
+    console.log(socket.id + ' connected.');
     socket.on('createRoom', () => {
         console.log('createRoom');
         const roomID = nanoid.nanoid(8);
@@ -41,7 +28,6 @@ io.on('connection', (socket) => {
     socket.on('message', (msg) => {
         console.log('message: ' + msg);
     });
-    console.log('a user connected');
 });
 
 http.listen(3000, bootstrap);
