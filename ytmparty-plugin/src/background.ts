@@ -3,6 +3,7 @@ import * as io from 'socket.io-client';
 class Background {
 
   isInParty = false;
+  partyCode;
   socket;
 
   constructor() {
@@ -18,6 +19,9 @@ class Background {
             case 'isInParty':
               console.log({isInParty: this.isInParty});
               sendResponse(this.isInParty);
+              break;
+            case 'getPartyCode':
+              sendResponse(this.partyCode);
               break;
             case 'createParty':
               this.createParty();
@@ -46,6 +50,7 @@ class Background {
     this.socket.on('joinedRoom', (message) => {
       console.log({joinedRoom: message});
       this.isInParty = true;
+      this.partyCode = message;
     });
   }
 
