@@ -17,25 +17,34 @@ class Background {
         if (request) {
           switch (request.event) {
             case 'isInParty':
-              console.log({isInParty: this.isInParty});
               sendResponse(this.isInParty);
               break;
             case 'getPartyCode':
               sendResponse(this.partyCode);
               break;
             case 'createParty':
-              this.createParty();
+              this.socket.emit('createRoom');
               break;
             case 'joinParty':
+              this.socket.emit('joinRoom', request.code);
+              break;
+            case 'leaveParty':
+              this.socket.emit('leaveRoom');
+              this.isInParty = false;
+              this.partyCode = null;
               break;
             case 'play':
+              this.socket.emit('play');
               break;
             case 'pause':
+              this.socket.emit('pause');
               break;
             case 'seeked':
+              this.socket.emit('seeked');
               break;
             case 'nextTrack':
-              const trackUrl = request.url;
+              this.socket.emit('nextTrack', {url: request.url, duration: request.duration});
+
               break;
             case 'advertisement':
               break;
@@ -49,8 +58,16 @@ class Background {
   listenSocketEvents(): void {
     this.socket.on('joinedRoom', (message) => {
       console.log({joinedRoom: message});
+      chrome.runtime.sendMessage({event: 'joinedRoom', code: message});
       this.isInParty = true;
       this.partyCode = message;
+    });
+
+    this.socket.on('error', (message) => {
+      console.log({error: message});
+      chrome.runtime.sendMessage({event: 'error', error: message});
+      this.isInParty = false;
+      this.partyCode = null;
     });
   }
 
@@ -63,13 +80,6 @@ class Background {
     });
   }
 
-  createParty(): void {
-    this.socket.emit('createRoom');
-  }
-
-  joinParty(roomID: string): void {
-    this.socket.emit('joinRoom', roomID);
-  }
 
 }
 
