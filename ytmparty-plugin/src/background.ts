@@ -2,7 +2,7 @@ import * as io from 'socket.io-client';
 
 class Background {
 
-  isInParty: boolean;
+  isInParty = false;
   socket;
 
   constructor() {

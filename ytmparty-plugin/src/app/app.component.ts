@@ -6,7 +6,7 @@ import {Component} from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  public IsInParty: boolean;
+  public IsInParty = false;
   public joinedPartyCode;
   public response;
   public value = '';
