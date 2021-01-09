@@ -9,7 +9,6 @@ export class AppComponent {
   public IsInParty: boolean;
   public joinedPartyCode;
   public response;
-  public error;
   public value = '';
   private extensionId = 'oononiaicnkfdebjkpfabepkggkneeep';
 
