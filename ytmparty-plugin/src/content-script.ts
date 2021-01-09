@@ -30,14 +30,19 @@ class ContentScript {
           chrome.runtime.sendMessage(this.extensionId, {event: 'play'});
           break;
         case 'seeked':
-          chrome.runtime.sendMessage(this.extensionId, {event: 'seeked'});
+          console.log(e);
+          chrome.runtime.sendMessage(this.extensionId, {event: 'seeked', to: this.video.currentTime});
           break;
         case 'loadedmetadata':
           // @ts-ignore
           if (navigator.mediaSession.metadata.artwork[0].src.includes('https://i.ytimg.com/')) {
-            chrome.runtime.sendMessage(this.extensionId, {event: 'advertisement'});
+            chrome.runtime.sendMessage(this.extensionId, {event: 'pause'});
           } else {
-            chrome.runtime.sendMessage(this.extensionId, {event: 'nextTrack', url: window.location.href.split('&')[0]});
+            chrome.runtime.sendMessage(this.extensionId, {
+              event: 'nextTrack',
+              url: window.location.href.split('&')[0],
+              duration: this.video.duration
+            });
           }
           break;
       }
