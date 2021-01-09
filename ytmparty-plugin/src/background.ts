@@ -13,9 +13,11 @@ class Background {
   listenMessages(): void {
     chrome.runtime.onMessage.addListener(
       (request, sender, sendResponse) => {
-        sendResponse(true);
         if (request) {
           switch (request.event) {
+            case 'isInParty':
+              sendResponse(this.isInParty);
+              break;
             case 'createParty':
               this.createParty();
               break;
@@ -34,6 +36,8 @@ class Background {
               break;
           }
         }
+        sendResponse(true);
+
       });
   }
 
