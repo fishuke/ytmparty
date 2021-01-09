@@ -1,19 +1,9 @@
 import * as io from 'socket.io-client';
-import {environment} from './environments/environment';
 
 class Background {
+
   isInParty: boolean;
   socket;
-
-  checkYtmTab: Promise<boolean> = new Promise((resolve, reject) => {
-    chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
-      if (!tabs[0].url.includes('https://music.youtube.com')) {
-        resolve(false);
-      } else {
-        resolve(true);
-      }
-    });
-  });
 
   constructor() {
     this.connectToWebsocket();
@@ -23,15 +13,52 @@ class Background {
   listenMessages(): void {
     chrome.runtime.onMessage.addListener(
       (request, sender, sendResponse) => {
-        console.log(request);
+        sendResponse(true);
+        if (request) {
+          switch (request.event) {
+            case 'createParty':
+              this.createParty();
+              break;
+            case 'joinParty':
+              break;
+            case 'play':
+              break;
+            case 'pause':
+              break;
+            case 'seeked':
+              break;
+            case 'nextTrack':
+              const trackUrl = request.url;
+              break;
+            case 'advertisement':
+              break;
+          }
+        }
       });
   }
 
-  connectToWebsocket(): void {
-    this.socket = io(environment.socket);
-    this.socket.on('connect', () => {
-      console.log('connected');
+  listenSocketEvents(): void {
+    this.socket.on('joinedRoom', (message) => {
+      console.log({joinedRoom: message});
+      this.isInParty = true;
     });
+  }
+
+  connectToWebsocket(): void {
+    // @ts-ignore
+    this.socket = io('ws://localhost:3000');
+    this.socket.on('connect', () => {
+      console.log('Client connected');
+      this.listenSocketEvents();
+    });
+  }
+
+  createParty(): void {
+    this.socket.emit('createRoom');
+  }
+
+  joinParty(roomID: string): void {
+    this.socket.emit('joinRoom', roomID);
   }
 
 }
