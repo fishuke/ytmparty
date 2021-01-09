@@ -33,6 +33,7 @@ class ContentScript {
           chrome.runtime.sendMessage(this.extensionId, {event: 'seeked'});
           break;
         case 'loadedmetadata':
+          // @ts-ignore
           if (navigator.mediaSession.metadata.artwork[0].src.includes('https://i.ytimg.com/')) {
             chrome.runtime.sendMessage(this.extensionId, {event: 'advertisement'});
           } else {
