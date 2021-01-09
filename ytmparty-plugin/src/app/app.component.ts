@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
+import {SnackbarService} from './services/snackbar.service';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +14,7 @@ export class AppComponent implements OnInit {
   public response;
   private extensionId = 'oononiaicnkfdebjkpfabepkggkneeep';
 
-  constructor() {
+  constructor(private snack: SnackbarService) {
   }
 
   ngOnInit(): void {
@@ -33,10 +34,11 @@ export class AppComponent implements OnInit {
           }
         });
     }, 50);
+    this.listenMessages();
   }
 
   async onJoinPartyButtonClick(): Promise<void> {
-    chrome.runtime.sendMessage(this.extensionId, {event: 'joinParty', partyCode: this.partyCode.value},
+    chrome.runtime.sendMessage(this.extensionId, {event: 'joinParty', code: this.partyCode.value},
       response => {
         console.log(response);
       });
@@ -50,9 +52,25 @@ export class AppComponent implements OnInit {
   }
 
   async onLeavePartyButtonClick(): Promise<void> {
-    chrome.runtime.sendMessage(this.extensionId, {event: 'leaveParty'},
-      response => {
-        console.log(response);
+    chrome.runtime.sendMessage(this.extensionId, {event: 'leaveParty'});
+    this.isInParty = false;
+  }
+
+  listenMessages(): void {
+    chrome.runtime.onMessage.addListener(
+      (request, sender, sendResponse) => {
+        if (request) {
+          if (request.event === 'joinedRoom') {
+            this.joinedPartyCode = request.code;
+            this.isInParty = true;
+          }
+          else if (request.event === 'error'){
+            console.log(request.error);
+            this.snack.error(request.error);
+          }
+        }
+        sendResponse(true);
+
       });
   }
 
