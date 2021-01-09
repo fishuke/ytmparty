@@ -16,6 +16,7 @@ class Background {
         if (request) {
           switch (request.event) {
             case 'isInParty':
+              console.log({isInParty: this.isInParty});
               sendResponse(this.isInParty);
               break;
             case 'createParty':
