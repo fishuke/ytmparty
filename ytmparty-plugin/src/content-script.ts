@@ -3,7 +3,9 @@ class ContentScript {
   extensionId = 'oononiaicnkfdebjkpfabepkggkneeep';
 
   constructor() {
+    console.log('loaded');
     this.findVideoQuery();
+    this.listenMessages();
   }
 
   /**
@@ -19,8 +21,7 @@ class ContentScript {
   }
 
   addEventListeners(): void {
-    this.addMultiListeners(this.video, 'pause play seeked loadedmetadata', (e) => {
-
+    this.addMultiListeners(this.video, 'pause play seeking loadedmetadata', (e) => {
 
       switch (e.type) {
         case 'pause':
@@ -29,7 +30,8 @@ class ContentScript {
         case 'play':
           chrome.runtime.sendMessage(this.extensionId, {event: 'play'});
           break;
-        case 'seeked':
+        case 'seeking':
+          console.log(e);
           chrome.runtime.sendMessage(this.extensionId, {event: 'seeked', to: this.video.currentTime});
           break;
         case 'loadedmetadata':
@@ -58,6 +60,38 @@ class ContentScript {
     }, 1000);
   }
 
+  listenMessages(): void {
+    chrome.runtime.onMessage.addListener(
+      (request, sender, sendResponse) => {
+        console.log(request);
+        if (request) {
+          switch (request.event) {
+            case 'pause':
+              this.video.pause();
+              break;
+            case 'play':
+              this.video.play();
+              break;
+            case 'nextTrack':
+              window.location.href = request.url;
+              break;
+            case 'seeked':
+              this.video.currentTime = request.to;
+              break;
+            case 'advertisement':
+              // @ts-ignore
+              if (navigator.mediaSession.metadata.artwork[0].src.includes('https://i.ytimg.com/')) {
+                this.video.play();
+              } else {
+                this.video.pause();
+              }
+              break;
+          }
+        }
+        sendResponse(true);
+
+      });
+  }
 }
 
 // tslint:disable-next-line:no-unused-expression
