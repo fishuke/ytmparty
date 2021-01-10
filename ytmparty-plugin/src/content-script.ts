@@ -73,7 +73,9 @@ class ContentScript {
               this.video.play();
               break;
             case 'nextTrack':
-              window.location.href = request.url;
+              if (window.location.href.split('&')[0] !== request.url) {
+                window.location.href = request.url;
+              }
               break;
             case 'seeked':
               this.video.currentTime = request.to;
