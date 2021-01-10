@@ -42,13 +42,18 @@ io.on('connection', (socket) => {
     });
 
     socket.on('seeked', (to) => {
-        console.log('seeked');
+        console.log('seeked ' + to);
         socket.broadcast.emit('seeked', to);
     });
 
     socket.on('nextTrack', (data) => {
         console.log('nextTrack');
         socket.broadcast.emit('nextTrack', data);
+    });
+
+    socket.on('advertisement', () => {
+        console.log('advertisement');
+        socket.broadcast.emit('advertisement');
     });
 });
 
