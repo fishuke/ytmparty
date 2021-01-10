@@ -18,20 +18,12 @@ io.on('connection', (socket) => {
     })
 
     socket.on('joinRoom', (roomID) => {
-        const rooms = io.sockets.adapter.rooms;
-
-        console.log(rooms);
-        console.log(rooms.get(roomID));
-        if (rooms.get(roomID)){
-            console.log(rooms.get(roomID).size);
-        }
-
-
         if (!io.sockets.adapter.rooms.get(roomID)) {
             return socket.emit('error', 'Room doesnt exist.');
         }
 
         socket.join(roomID);
+
         socket.emit('joinedRoom', roomID);
     })
 
@@ -56,7 +48,7 @@ io.on('connection', (socket) => {
 
     socket.on('nextTrack', (data) => {
         console.log('nextTrack');
-        socket.broadcast.emit('seeked', data);
+        socket.broadcast.emit('nextTrack', data);
     });
 });
 
