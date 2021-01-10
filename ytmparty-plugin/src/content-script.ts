@@ -30,7 +30,6 @@ class ContentScript {
           chrome.runtime.sendMessage(this.extensionId, {event: 'play'});
           break;
         case 'seeked':
-          console.log(e);
           chrome.runtime.sendMessage(this.extensionId, {event: 'seeked', to: this.video.currentTime});
           break;
         case 'loadedmetadata':
