@@ -44,7 +44,6 @@ class Background {
               break;
             case 'nextTrack':
               this.socket.emit('nextTrack', {url: request.url, duration: request.duration});
-
               break;
             case 'advertisement':
               break;
