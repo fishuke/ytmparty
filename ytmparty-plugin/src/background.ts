@@ -58,9 +58,58 @@ class Background {
   listenSocketEvents(): void {
     this.socket.on('joinedRoom', (message) => {
       console.log({joinedRoom: message});
-      chrome.runtime.sendMessage({event: 'joinedRoom', code: message});
+      chrome.tabs.query({url: 'https://music.youtube.com/*'}, tabs => {
+        if (tabs.length !== 0) {
+          chrome.tabs.sendMessage(tabs[0].id, {event: 'joinedRoom', code: message});
+        }
+      });
       this.isInParty = true;
       this.partyCode = message;
+    });
+
+    this.socket.on('nextTrack', (data) => {
+      console.log({nextTrack: data});
+      chrome.tabs.query({url: 'https://music.youtube.com/*'}, tabs => {
+        if (tabs.length !== 0) {
+          chrome.tabs.sendMessage(tabs[0].id, {event: 'nextTrack', url: data.url, duration: data.duration});
+        }
+      });
+    });
+
+    this.socket.on('play', () => {
+      console.log('play');
+      chrome.tabs.query({url: 'https://music.youtube.com/*'}, tabs => {
+        if (tabs.length !== 0) {
+          chrome.tabs.sendMessage(tabs[0].id, {event: 'play'});
+        }
+      });
+    });
+
+    this.socket.on('pause', () => {
+      console.log('pause');
+      chrome.tabs.query({url: 'https://music.youtube.com/*'}, tabs => {
+        if (tabs.length !== 0) {
+          chrome.tabs.sendMessage(tabs[0].id, {event: 'pause'});
+        }
+      });
+    });
+
+    this.socket.on('seeked', (to) => {
+      console.log({seeked: to});
+      chrome.tabs.query({url: 'https://music.youtube.com/*'}, tabs => {
+        if (tabs.length !== 0) {
+          chrome.tabs.sendMessage(tabs[0].id, {event: 'seeked', to});
+        }
+      });
+    });
+
+    this.socket.on('advertisement', () => {
+      console.log('advertisement');
+      chrome.tabs.query({url: 'https://music.youtube.com/*'}, tabs => {
+        if (tabs.length !== 0) {
+          chrome.tabs.sendMessage(tabs[0].id, {event: 'advertisement'});
+        }
+      });
     });
 
     this.socket.on('error', (message) => {
