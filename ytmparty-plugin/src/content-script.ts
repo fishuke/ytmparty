@@ -29,7 +29,7 @@ class ContentScript {
 
       switch (e.type) {
         case 'pause':
-          if (this.isLeftClickClicked === true || this.mediaKeysPressed.pause || this.keysPressed.Space){
+          if (this.isLeftClickClicked === true || this.mediaKeysPressed.pause || this.keysPressed.Space) {
             chrome.runtime.sendMessage(this.extensionId, {event: 'pause'});
           }
           break;
@@ -40,7 +40,7 @@ class ContentScript {
           break;
         case 'seeked':
           if (this.isLeftClickClicked === true || this.keysPressed.ArrowRight || this.keysPressed.ArrowLeft) {
-          chrome.runtime.sendMessage(this.extensionId, {event: 'seeked', to: this.video?.currentTime});
+            chrome.runtime.sendMessage(this.extensionId, {event: 'seeked', to: this.video.currentTime});
           }
           break;
         case 'loadedmetadata':
@@ -51,7 +51,7 @@ class ContentScript {
             chrome.runtime.sendMessage(this.extensionId, {
               event: 'nextTrack',
               url: window.location.href.split('&')[0],
-              duration: this.video?.duration
+              duration: this.video.duration
             });
           }
           break;
@@ -76,26 +76,26 @@ class ContentScript {
         if (request) {
           switch (request.event) {
             case 'pause':
-              this.video?.pause();
+              this.video.pause();
               break;
             case 'play':
-              this.video?.play();
+              this.video.play();
               break;
             case 'nextTrack':
               if (window.location.href.split('&')[0] !== request.url) {
-                this.video?.pause();
+                this.video.pause();
                 window.location.href = request.url;
               }
               break;
             case 'seeked':
-              this.video?.currentTime = request.to;
+              this.video.currentTime = request.to;
               break;
             case 'advertisement':
               // @ts-ignore
               if (navigator.mediaSession.metadata.artwork[0].src.includes('https://i.ytimg.com/')) {
-                this.video?.play();
+                this.video.play();
               } else {
-                this.video?.pause();
+                this.video.pause();
               }
               break;
           }
@@ -168,7 +168,7 @@ class ContentScript {
 
     mediaSession.setActionHandler('play', ({action}) => {
       this.mediaKeysPressed[action] = true;
-      this.video?.play();
+      this.video.play();
       setTimeout(() => {
         delete this.mediaKeysPressed[action];
       }, 100);
@@ -176,7 +176,7 @@ class ContentScript {
 
     mediaSession.setActionHandler('pause', ({action}) => {
       this.mediaKeysPressed[action] = true;
-      this.video?.pause();
+      this.video.pause();
       setTimeout(() => {
         delete this.mediaKeysPressed[action];
       }, 100);
