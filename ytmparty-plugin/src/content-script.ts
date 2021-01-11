@@ -6,7 +6,6 @@ class ContentScript {
   private mediaKeysPressed: any;
 
   constructor() {
-    console.log('loaded');
     this.findVideoQuery();
     this.listenMessages();
     this.listenMouseEvents();

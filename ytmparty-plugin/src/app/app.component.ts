@@ -38,17 +38,11 @@ export class AppComponent implements OnInit {
   }
 
   async onJoinPartyButtonClick(): Promise<void> {
-    chrome.runtime.sendMessage(this.extensionId, {event: 'joinParty', code: this.partyCode.value},
-      response => {
-        console.log(response);
-      });
+    chrome.runtime.sendMessage(this.extensionId, {event: 'joinParty', code: this.partyCode.value});
   }
 
   async onCreatePartyButtonClick(): Promise<void> {
-    chrome.runtime.sendMessage(this.extensionId, {event: 'createParty'},
-      response => {
-        console.log(response);
-      });
+    chrome.runtime.sendMessage(this.extensionId, {event: 'createParty'});
   }
 
   async onLeavePartyButtonClick(): Promise<void> {
