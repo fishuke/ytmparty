@@ -2,6 +2,7 @@ class ContentScript {
   video;
   extensionId = 'oononiaicnkfdebjkpfabepkggkneeep';
   private isLeftClickClicked: boolean;
+  private keysPressed: any;
 
   constructor() {
     console.log('loaded');
@@ -108,6 +109,16 @@ class ContentScript {
       if (which === 1){
         this.isLeftClickClicked = false;
       }
+    });
+  }
+
+  listenKeyboardEvents(): void {
+    document.addEventListener('keydown', (keyboardEvent) => {
+      this.keysPressed[keyboardEvent.code] = true;
+    });
+
+    document.addEventListener('keyup', (keyboardEvent) => {
+      delete this.keysPressed[keyboardEvent.code];
     });
   }
 }
