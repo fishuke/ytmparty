@@ -1,13 +1,16 @@
 class ContentScript {
-  video;
-  extensionId = 'oononiaicnkfdebjkpfabepkggkneeep';
+  private video;
+  private extensionId = 'oononiaicnkfdebjkpfabepkggkneeep';
   private isLeftClickClicked: boolean;
   private keysPressed: any;
+  private mediaKeysPressed: any;
 
   constructor() {
     console.log('loaded');
     this.findVideoQuery();
     this.listenMessages();
+    this.listenMouseEvents();
+    this.listenKeyboardEvents();
   }
 
   /**
@@ -76,6 +79,7 @@ class ContentScript {
               break;
             case 'nextTrack':
               if (window.location.href.split('&')[0] !== request.url) {
+                this.video.pause();
                 window.location.href = request.url;
               }
               break;
@@ -99,14 +103,14 @@ class ContentScript {
 
   listenMouseEvents(): void {
     document.addEventListener('mousedown', ({which}) => {
-      if (which === 1){
+      if (which === 1) {
         this.isLeftClickClicked = true;
       }
 
     });
 
     document.addEventListener('mouseup', ({which}) => {
-      if (which === 1){
+      if (which === 1) {
         this.isLeftClickClicked = false;
       }
     });
@@ -120,6 +124,58 @@ class ContentScript {
     document.addEventListener('keyup', (keyboardEvent) => {
       delete this.keysPressed[keyboardEvent.code];
     });
+  }
+
+  listenMediaSessionEvents(): void {
+
+    // @ts-ignore
+    const mediaSession = navigator.mediaSession;
+
+    mediaSession.setActionHandler('seekbackward', ({action}) => {
+      this.mediaKeysPressed[action] = true;
+      setTimeout(() => {
+        delete this.mediaKeysPressed[action];
+      }, 100);
+    });
+
+    mediaSession.setActionHandler('seekforward', ({action}) => {
+      this.mediaKeysPressed[action] = true;
+      setTimeout(() => {
+        delete this.mediaKeysPressed[action];
+      }, 100);
+    });
+
+    // mediaSession.setActionHandler('previoustrack', ({action}) => {
+    //   this.mediaKeysPressed[action] = true;
+    //   setTimeout(() => {
+    //     delete this.mediaKeysPressed[action];
+    //   }, 100);
+    // });
+    //
+    // mediaSession.setActionHandler('nexttrack', ({action}) => {
+    //   this.mediaKeysPressed[action] = true;
+    //   setTimeout(() => {
+    //     delete this.mediaKeysPressed[action];
+    //   }, 100);
+    // });
+
+
+    mediaSession.setActionHandler('play', ({action}) => {
+      this.mediaKeysPressed[action] = true;
+      this.video.play();
+      setTimeout(() => {
+        delete this.mediaKeysPressed[action];
+      }, 100);
+    });
+
+    mediaSession.setActionHandler('pause', ({action}) => {
+      this.mediaKeysPressed[action] = true;
+      this.video.pause();
+      setTimeout(() => {
+        delete this.mediaKeysPressed[action];
+      }, 100);
+    });
+
   }
 }
 
