@@ -1,6 +1,7 @@
 class ContentScript {
   video;
   extensionId = 'oononiaicnkfdebjkpfabepkggkneeep';
+  private isLeftClickClicked: boolean;
 
   constructor() {
     console.log('loaded');
@@ -93,6 +94,21 @@ class ContentScript {
         sendResponse(true);
 
       });
+  }
+
+  listenMouseEvents(): void {
+    document.addEventListener('mousedown', ({which}) => {
+      if (which === 1){
+        this.isLeftClickClicked = true;
+      }
+
+    });
+
+    document.addEventListener('mouseup', ({which}) => {
+      if (which === 1){
+        this.isLeftClickClicked = false;
+      }
+    });
   }
 }
 
