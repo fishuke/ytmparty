@@ -45,9 +45,9 @@ export class AppComponent implements OnInit {
           if (request.event === 'joinedRoom') {
             this.joinedPartyCode = request.code;
             this.isInParty = true;
-          }
-          else if (request.event === 'error'){
+          } else if (request.event === 'error') {
             this.snack.error(request.error);
+            this.isInParty = false;
           }
         }
         sendResponse(true);
