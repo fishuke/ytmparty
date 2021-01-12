@@ -84,7 +84,10 @@ class ContentScript {
             case 'nextTrack':
               if (window.location.href.split('&')[0] !== request.url) {
                 this.video.pause();
-                window.location.href = request.url;
+                setTimeout(() => {
+                  window.location.href = request.url;
+                }, 50);
+
               }
               break;
             case 'seeked':
