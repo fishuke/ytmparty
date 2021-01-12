@@ -72,7 +72,6 @@ class ContentScript {
   listenMessages(): void {
     chrome.runtime.onMessage.addListener(
       (request, sender, sendResponse) => {
-        console.log(request);
         if (request) {
           switch (request.event) {
             case 'pause':
