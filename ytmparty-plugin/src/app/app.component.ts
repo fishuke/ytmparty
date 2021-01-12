@@ -23,6 +23,9 @@ export class AppComponent implements OnInit {
   }
 
   async onJoinPartyButtonClick(): Promise<void> {
+    setTimeout(() => {
+      this.checkParty();
+    }, 100);
     chrome.runtime.sendMessage(this.extensionId, {event: 'joinParty', code: this.partyCode.value});
   }
 
