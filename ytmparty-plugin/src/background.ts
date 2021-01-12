@@ -40,12 +40,13 @@ class Background {
               this.socket.emit('pause');
               break;
             case 'seeked':
-              this.socket.emit('seeked');
+              this.socket.emit('seeked', request.to);
               break;
             case 'nextTrack':
               this.socket.emit('nextTrack', {url: request.url, duration: request.duration});
               break;
             case 'advertisement':
+              this.socket.emit('advertisement');
               break;
           }
         }
@@ -121,7 +122,7 @@ class Background {
 
   connectToWebsocket(): void {
     // @ts-ignore
-    this.socket = io('ws://localhost:3000');
+    this.socket = io('wss://ytmparty.herokuapp.com');
     this.socket.on('connect', () => {
       console.log('Client connected');
       this.listenSocketEvents();
