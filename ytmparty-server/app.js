@@ -57,8 +57,8 @@ io.on('connection', (socket) => {
     });
 });
 
-io.listen(3000, bootstrap);
+io.listen(process.env.port || 3000, bootstrap);
 
 function bootstrap() {
-    console.log('listening on *:3000');
+    console.log(`listening on *:${process.env.port || 3000}`);
 }
