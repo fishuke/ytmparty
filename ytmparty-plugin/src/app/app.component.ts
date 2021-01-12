@@ -18,22 +18,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    chrome.runtime.sendMessage(this.extensionId, {event: 'isInParty'},
-      response => {
-        this.isInParty = response;
-        if (response) {
-          this.getPartyCode();
-        }
-      });
-    setTimeout(() => {
-      chrome.runtime.sendMessage(this.extensionId, {event: 'isInParty'},
-        response => {
-          this.isInParty = response;
-          if (response) {
-            this.getPartyCode();
-          }
-        });
-    }, 50);
+    this.checkParty();
     this.listenMessages();
   }
 
@@ -74,4 +59,22 @@ export class AppComponent implements OnInit {
       });
   }
 
+  private checkParty() {
+    chrome.runtime.sendMessage(this.extensionId, {event: 'isInParty'},
+      response => {
+        this.isInParty = response;
+        if (response) {
+          this.getPartyCode();
+        }
+      });
+    setTimeout(() => {
+      chrome.runtime.sendMessage(this.extensionId, {event: 'isInParty'},
+        response => {
+          this.isInParty = response;
+          if (response) {
+            this.getPartyCode();
+          }
+        });
+    }, 50);
+  }
 }
