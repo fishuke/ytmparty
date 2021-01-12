@@ -1,4 +1,5 @@
 import * as io from 'socket.io-client';
+import {environment} from "./environments/environment";
 
 class Background {
 
@@ -59,11 +60,7 @@ class Background {
   listenSocketEvents(): void {
     this.socket.on('joinedRoom', (message) => {
       console.log({joinedRoom: message});
-      chrome.tabs.query({url: 'https://music.youtube.com/*'}, tabs => {
-        if (tabs.length !== 0) {
-          chrome.tabs.sendMessage(tabs[0].id, {event: 'joinedRoom', code: message});
-        }
-      });
+      chrome.runtime.sendMessage({event: 'joinedRoom', code: message});
       this.isInParty = true;
       this.partyCode = message;
     });
@@ -123,7 +120,7 @@ class Background {
 
   connectToWebsocket(): void {
     // @ts-ignore
-    this.socket = io('wss://ytmparty.herokuapp.com');
+    this.socket = io(environment.socket);
     this.socket.on('connect', () => {
       console.log('Client connected');
       this.listenSocketEvents();
