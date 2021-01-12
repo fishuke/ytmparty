@@ -12,7 +12,7 @@ export class AppComponent implements OnInit {
   public isInParty;
   public joinedPartyCode;
   public response;
-  private extensionId = 'oononiaicnkfdebjkpfabepkggkneeep';
+  private extensionId = chrome.runtime.id;
 
   constructor(private snack: SnackbarService) {
   }
@@ -81,6 +81,6 @@ export class AppComponent implements OnInit {
             this.getPartyCode();
           }
         });
-    }, 50);
+    }, 100);
   }
 }
