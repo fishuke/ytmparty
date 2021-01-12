@@ -1,4 +1,5 @@
 export const environment = {
   production: false,
-  socket: 'http://localhost:3000'
+  socket: 'ws://localhost:3000',
+  extensionId: "oononiaicnkfdebjkpfabepkggkneeep"
 };

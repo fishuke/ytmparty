@@ -1,3 +1,5 @@
 export const environment = {
-  production: true
+  production: true,
+  socket: 'wss://ytmparty.herokuapp.com',
+  extensionId: "oononiaicnkfdebjkpfabepkggkneeep"
 };
