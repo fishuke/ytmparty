@@ -4,12 +4,7 @@
   "description": "Listen music together with your friends in Youtube Music.",
   "manifest_version": 2,
   "permissions": [
-    "activeTab",
     "tabs",
-    "declarativeContent",
-    "webNavigation",
-    "webRequest",
-    "storage",
     "https://music.youtube.com/*"
   ],
   "background": {
