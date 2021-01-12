@@ -6,11 +6,12 @@ class ContentScript {
   private mediaKeysPressed: any;
 
   constructor() {
+    this.keysPressed = {};
+    this.mediaKeysPressed = {};
     this.findVideoQuery();
     this.listenMessages();
     this.listenMouseEvents();
     this.listenKeyboardEvents();
-    this.listenMediaSessionEvents();
   }
 
   /**
@@ -44,7 +45,13 @@ class ContentScript {
             chrome.runtime.sendMessage(this.extensionId, {event: 'seeked', to: this.video.currentTime});
           }
           break;
+        case 'advertisement':
+          if (this.isLeftClickClicked === true || this.keysPressed.ArrowRight || this.keysPressed.ArrowLeft) {
+            chrome.runtime.sendMessage(this.extensionId, {event: 'seeked', to: this.video.currentTime});
+          }
+          break;
         case 'loadedmetadata':
+          this.listenMediaSessionEvents();
           // @ts-ignore
           if (navigator.mediaSession.metadata.artwork[0].src.includes('https://i.ytimg.com/')) {
             chrome.runtime.sendMessage(this.extensionId, {event: 'advertisement'});
@@ -94,6 +101,7 @@ class ContentScript {
               this.video.currentTime = request.to;
               break;
             case 'advertisement':
+              console.log('advertisement')
               // @ts-ignore
               if (navigator.mediaSession.metadata.artwork[0].src.includes('https://i.ytimg.com/')) {
                 this.video.play();
@@ -110,6 +118,7 @@ class ContentScript {
 
   listenMouseEvents(): void {
     document.addEventListener('mousedown', ({which}) => {
+      console.log('leftclickdown');
       if (which === 1) {
         this.isLeftClickClicked = true;
       }
@@ -118,7 +127,9 @@ class ContentScript {
 
     document.addEventListener('mouseup', ({which}) => {
       if (which === 1) {
-        this.isLeftClickClicked = false;
+        setTimeout(() => {
+          this.isLeftClickClicked = false;
+        }, 50);
       }
     });
   }
@@ -136,9 +147,6 @@ class ContentScript {
   }
 
   listenMediaSessionEvents(): void {
-
-    // @ts-ignore
-    const mediaSession = navigator.mediaSession;
 
     // mediaSession.setActionHandler('seekbackward', ({action}) => {
     //   this.mediaKeysPressed[action] = true;
@@ -168,20 +176,23 @@ class ContentScript {
     //   }, 100);
     // });
 
-
-    mediaSession.setActionHandler('play', ({action}) => {
-      this.mediaKeysPressed[action] = true;
+    //@ts-ignore
+    navigator.mediaSession.setActionHandler('play', ({action}) => {
+      console.log(action);
+      this.mediaKeysPressed.play = true;
       this.video.play();
       setTimeout(() => {
-        delete this.mediaKeysPressed[action];
+        delete this.mediaKeysPressed.play;
       }, 100);
     });
 
-    mediaSession.setActionHandler('pause', ({action}) => {
-      this.mediaKeysPressed[action] = true;
+    //@ts-ignore
+    navigator.mediaSession.setActionHandler('pause', ({action}) => {
+      console.log(action);
+      this.mediaKeysPressed.pause = true;
       this.video.pause();
       setTimeout(() => {
-        delete this.mediaKeysPressed[action];
+        delete this.mediaKeysPressed.pause;
       }, 100);
     });
 
