@@ -20,10 +20,9 @@
 
   <section *ngIf="isInParty === true" class="layout">
 
-    <h2>Party Code: {{joinedPartyCode ? joinedPartyCode : ''}}</h2>
+    <h2>Party Code: {{joinedPartyCode}}</h2>
 
     <button color="warn" mat-raised-button (click)="onLeavePartyButtonClick()" style="width: 100%"> Leave Party</button>
 
   </section>
-
 </main>
