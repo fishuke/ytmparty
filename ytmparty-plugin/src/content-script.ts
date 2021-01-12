@@ -10,6 +10,7 @@ class ContentScript {
     this.listenMessages();
     this.listenMouseEvents();
     this.listenKeyboardEvents();
+    this.listenMediaSessionEvents();
   }
 
   /**
