@@ -6,7 +6,7 @@
     "start": "node ytmparty-server/app.js",
     "start:server": "nodemon ytmparty-server/app.js",
     "start:plugin": "cd ytmparty-plugin && ng build --watch",
-    "build": "cd ytmparty-plugin && ng build --prod",
+    "build:prod": "cd ytmparty-plugin && ng build --prod",
     "lint": "cd ytmparty-plugin && ng lint"
   },
   "private": true,
