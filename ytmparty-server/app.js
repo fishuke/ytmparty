@@ -15,7 +15,6 @@ const io = require('socket.io')(server, {
 
 io.on('connection', (socket) => {
     console.log(socket.id + ' connected.');
-
     socket.on('createRoom', () => {
         console.log('createRoom');
         const roomID = nanoid.nanoid(8);
@@ -40,27 +39,47 @@ io.on('connection', (socket) => {
 
     socket.on('pause', () => {
         console.log('pause');
-        socket.broadcast.emit('pause');
+        socket.rooms.forEach(room => {
+            if (room !== socket.id) {
+                socket.to(room).emit('pause');
+            }
+        })
     });
 
     socket.on('play', () => {
         console.log('play');
-        socket.broadcast.emit('play');
+        socket.rooms.forEach(room => {
+            if (room !== socket.id) {
+                socket.to(room).emit('play');
+            }
+        });
     });
 
     socket.on('seeked', (to) => {
         console.log('seeked ' + to);
-        socket.broadcast.emit('seeked', to);
+        socket.rooms.forEach(room => {
+            if (room !== socket.id) {
+                socket.to(room).emit('seeked', to);
+            }
+        });
     });
 
     socket.on('nextTrack', (data) => {
         console.log('nextTrack');
-        socket.broadcast.emit('nextTrack', data);
+        socket.rooms.forEach(room => {
+            if (room !== socket.id) {
+                socket.to(room).emit('nextTrack', data);
+            }
+        });
     });
 
     socket.on('advertisement', () => {
         console.log('advertisement');
-        socket.broadcast.emit('advertisement');
+        socket.rooms.forEach(room => {
+            if (room !== socket.id) {
+                socket.to(room).emit('advertisement');
+            }
+        });
     });
 });
 
