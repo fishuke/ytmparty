@@ -43,6 +43,7 @@ class Background {
               this.socket.emit('seeked', request.to);
               break;
             case 'nextTrack':
+              this.socket.emit('seeked', 0);
               this.socket.emit('nextTrack', {url: request.url, duration: request.duration});
               break;
             case 'advertisement':
