@@ -45,11 +45,6 @@ class ContentScript {
             chrome.runtime.sendMessage(this.extensionId, {event: 'seeked', to: this.video.currentTime});
           }
           break;
-        case 'advertisement':
-          if (this.isLeftClickClicked === true || this.keysPressed.ArrowRight || this.keysPressed.ArrowLeft) {
-            chrome.runtime.sendMessage(this.extensionId, {event: 'seeked', to: this.video.currentTime});
-          }
-          break;
         case 'loadedmetadata':
           this.listenMediaSessionEvents();
           // @ts-ignore
