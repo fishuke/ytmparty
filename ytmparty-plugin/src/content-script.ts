@@ -1,6 +1,8 @@
+import {environment} from "./environments/environment";
+
 class ContentScript {
   private video;
-  private extensionId = 'oononiaicnkfdebjkpfabepkggkneeep';
+  private extensionId = environment.extensionId;
   private isLeftClickClicked: boolean;
   private keysPressed: any;
   private mediaKeysPressed: any;
