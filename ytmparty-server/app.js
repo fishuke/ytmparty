@@ -1,5 +1,12 @@
 const nanoid = require('nanoid');
-const io = require('socket.io')({
+const express = require("express");
+
+const PORT = process.env.PORT || 3000;
+const server = express()
+    .use((req, res) => res.send('Hello World!'))
+    .listen(PORT, () => console.log(`Listening on ${PORT}`));
+
+const io = require('socket.io')(server, {
     cors: {
         origin: "chrome-extension://oononiaicnkfdebjkpfabepkggkneeep",
         credentials: true
