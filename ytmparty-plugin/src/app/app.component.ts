@@ -59,7 +59,6 @@ export class AppComponent implements OnInit {
             this.isInParty = true;
           }
           else if (request.event === 'error'){
-            console.log(request.error);
             this.snack.error(request.error);
           }
         }
@@ -71,7 +70,6 @@ export class AppComponent implements OnInit {
   getPartyCode(): void {
     chrome.runtime.sendMessage(this.extensionId, {event: 'getPartyCode'},
       response => {
-        console.log(response);
         this.joinedPartyCode = response;
       });
   }
