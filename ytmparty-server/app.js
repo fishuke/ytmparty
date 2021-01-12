@@ -8,7 +8,7 @@ const server = express()
 
 const io = require('socket.io')(server, {
     cors: {
-        origin: "chrome-extension://oononiaicnkfdebjkpfabepkggkneeep",
+        origin: "chrome-extension://*",
         credentials: true
     }
 });
