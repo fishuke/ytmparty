@@ -27,6 +27,9 @@ export class AppComponent implements OnInit {
   }
 
   async onCreatePartyButtonClick(): Promise<void> {
+    setTimeout(() => {
+      this.checkParty();
+    }, 100)
     chrome.runtime.sendMessage(this.extensionId, {event: 'createParty'});
   }
 
