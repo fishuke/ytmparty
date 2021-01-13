@@ -68,8 +68,11 @@ io.on('connection', (socket) => {
         console.log('nextTrack');
         socket.rooms.forEach(room => {
             if (room !== socket.id) {
+                socket.to(room).emit('pause');
                 socket.to(room).emit('nextTrack', data);
-                socket.to(room).emit('play');
+                setTimeout(() => {
+                    socket.to(room).emit('play');
+                }, 100);
             }
         });
     });
