@@ -53,6 +53,7 @@ class ContentScript {
           if (navigator.mediaSession.metadata.artwork[0].src.includes('https://i.ytimg.com/')) {
             chrome.runtime.sendMessage(this.extensionId, {event: 'advertisement'});
           } else {
+            this.listenMediaSessionEvents();
             chrome.runtime.sendMessage(this.extensionId, {
               event: 'nextTrack',
               url: window.location.href.split('&')[0],
