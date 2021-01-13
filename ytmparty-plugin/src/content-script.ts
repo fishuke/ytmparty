@@ -1,4 +1,4 @@
-import {environment} from "./environments/environment";
+import {environment} from './environments/environment';
 
 class ContentScript {
   private video;
@@ -98,7 +98,7 @@ class ContentScript {
               this.video.currentTime = request.to;
               break;
             case 'advertisement':
-              console.log('advertisement')
+              console.log('advertisement');
               // @ts-ignore
               if (navigator.mediaSession.metadata.artwork[0].src.includes('https://i.ytimg.com/')) {
                 this.video.play();
@@ -173,7 +173,7 @@ class ContentScript {
     //   }, 100);
     // });
 
-    //@ts-ignore
+    // @ts-ignore
     navigator.mediaSession.setActionHandler('play', ({action}) => {
       console.log(action);
       this.mediaKeysPressed.play = true;
@@ -183,7 +183,7 @@ class ContentScript {
       }, 100);
     });
 
-    //@ts-ignore
+    // @ts-ignore
     navigator.mediaSession.setActionHandler('pause', ({action}) => {
       console.log(action);
       this.mediaKeysPressed.pause = true;
