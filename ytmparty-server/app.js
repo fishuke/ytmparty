@@ -69,6 +69,7 @@ io.on('connection', (socket) => {
         socket.rooms.forEach(room => {
             if (room !== socket.id) {
                 socket.to(room).emit('nextTrack', data);
+                socket.to(room).emit('play');
             }
         });
     });
