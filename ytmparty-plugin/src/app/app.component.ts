@@ -32,7 +32,7 @@ export class AppComponent implements OnInit {
   async onCreatePartyButtonClick(): Promise<void> {
     setTimeout(() => {
       this.checkParty();
-    }, 100)
+    }, 100);
     chrome.runtime.sendMessage(this.extensionId, {event: 'createParty'});
   }
 
@@ -65,7 +65,7 @@ export class AppComponent implements OnInit {
       });
   }
 
-  private checkParty() {
+  private checkParty(): void {
     chrome.runtime.sendMessage(this.extensionId, {event: 'isInParty'},
       response => {
         this.isInParty = response;
