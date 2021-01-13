@@ -1,5 +1,5 @@
 import * as io from 'socket.io-client';
-import {environment} from "./environments/environment";
+import {environment} from './environments/environment';
 
 class Background {
 
