@@ -1,6 +1,6 @@
 {
   "name": "Youtube Music Party",
-  "version": "1.0",
+  "version": "1.0.1",
   "description": "Listen music together with your friends in Youtube Music.",
   "manifest_version": 2,
   "permissions": [
