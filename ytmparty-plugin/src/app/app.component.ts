@@ -30,10 +30,16 @@ export class AppComponent implements OnInit {
   }
 
   async onCreatePartyButtonClick(): Promise<void> {
+    chrome.runtime.sendMessage(this.extensionId, {event: 'createParty'});
     setTimeout(() => {
       this.checkParty();
     }, 100);
-    chrome.runtime.sendMessage(this.extensionId, {event: 'createParty'});
+    setTimeout(() => {
+      this.checkParty();
+    }, 250);
+    setTimeout(() => {
+      this.checkParty();
+    }, 500);
   }
 
   async onLeavePartyButtonClick(): Promise<void> {
@@ -46,8 +52,10 @@ export class AppComponent implements OnInit {
       (request, sender, sendResponse) => {
         if (request) {
           if (request.event === 'joinedRoom') {
+
             this.joinedPartyCode = request.code;
             this.isInParty = true;
+            this.checkParty();
           } else if (request.event === 'error') {
             this.snack.error(request.error);
             this.isInParty = false;
