@@ -5,7 +5,7 @@ Listen to music with your friends on Youtube Music.
 ## Why?
 
 I like listening music.
-I wanted to listen music with my friends but youtube music doesnt have feature so.
+I wanted to listen music with my friends but Youtube Music doesnt have feature so.
 Then i wanted to make this extension.
 Its a simple extension which listen play, pause, seek and Media
 change events and post to other members via websocket.
