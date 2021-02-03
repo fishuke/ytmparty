@@ -48,18 +48,18 @@ class ContentScript {
           }
           break;
         case 'loadedmetadata':
-          this.listenMediaSessionEvents();
+          // this.listenMediaSessionEvents();
           // @ts-ignore
-          if (navigator.mediaSession.metadata.artwork[0].src.includes('https://i.ytimg.com/')) {
-            chrome.runtime.sendMessage(this.extensionId, {event: 'advertisement'});
-          } else {
+          // if (navigator.mediaSession.metadata.artwork[0].src.includes('https://i.ytimg.com/')) {
+          //  chrome.runtime.sendMessage(this.extensionId, {event: 'advertisement'});
+          // } else {
             this.listenMediaSessionEvents();
             chrome.runtime.sendMessage(this.extensionId, {
               event: 'nextTrack',
               url: window.location.href.split('&')[0],
               duration: this.video.duration
             });
-          }
+          // }
           break;
       }
     });
