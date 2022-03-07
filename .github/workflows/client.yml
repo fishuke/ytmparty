@@ -20,6 +20,8 @@ jobs:
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
 
+      - run: yarn install --frozen-lockfile --cache-folder ${{ steps.yarn-cache-dir-path.outputs.dir }}
+
       - uses: actions/cache@v2
         id: yarn-cache
         with:
@@ -27,7 +29,6 @@ jobs:
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
-      - run: yarn install --cache-folder ${{ steps.yarn-cache.outputs.path }}
 
 
   build-client:
