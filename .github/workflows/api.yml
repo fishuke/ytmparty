@@ -1,0 +1,32 @@
+name: Api Build & Test & Deploy
+
+on:
+  push:
+    branches: [ master ]
+    paths: [ 'api/**/*' ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [ 16.x ]
+
+    defaults:
+      run:
+        working-directory: ./api
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-go@v2
+        with:
+          go-version: ${{ matrix.go }}
+      - run: go run main.go
+      - uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "ytmparty-api"
+          heroku_email: "fishukee@gmail.com"
+          appdir: "api"
