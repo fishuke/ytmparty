@@ -23,7 +23,7 @@ jobs:
       - uses: actions/setup-go@v2
         with:
           go-version: ${{ matrix.go }}
-      - run: go run main.go
+      - run: go build main.go
 
   deploy-api:
 
