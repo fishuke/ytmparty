@@ -6,26 +6,46 @@ on:
     paths: [ 'client/**/*' ]
 
 jobs:
-  build-client:
+  install-client:
 
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [ 16.x ]
-
+    
     defaults:
       run:
         working-directory: ./client
 
     steps:
       - uses: actions/checkout@v2
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Use Node.js 16.x
         uses: actions/setup-node@v2
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 16.x
           cache: 'npm'
           cache-dependency-path: client/package-lock.json
       - run: npm ci
+        
+
+  build-client:
+
+    runs-on: ubuntu-latest
+    
+    defaults:
+      run:
+        working-directory: ./client
+
+    steps:
+      - uses: actions/checkout@v2
       - run: npm run build
+
+  
+  test-client:
+    
+    runs-on: ubuntu-latest
+      
+    defaults:
+        run:
+          working-directory: ./client
+      
+    steps:
+      - uses: actions/checkout@v2
       - run: npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
