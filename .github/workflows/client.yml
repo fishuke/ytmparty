@@ -43,7 +43,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - run: npm run build
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
+      - run: yarn run build
 
   
   test-client:
@@ -57,4 +60,4 @@ jobs:
       
     steps:
       - uses: actions/checkout@v2
-      - run: npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
+      - run: yarn run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
