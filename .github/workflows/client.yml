@@ -41,6 +41,7 @@ jobs:
           node-version: '16'
           cache: 'yarn'
           cache-dependency-path: client/yarn.lock
+      - run: yarn install
       - run: yarn run build
 
   
@@ -60,4 +61,5 @@ jobs:
           node-version: '16'
           cache: 'yarn'
           cache-dependency-path: client/yarn.lock
+      - run: yarn install
       - run: yarn run test
