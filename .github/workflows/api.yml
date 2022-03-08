@@ -4,13 +4,7 @@ on:
   push:
     branches: [ master ]
     paths: [ 'api/**/*' ]
-
-env:
-  HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-  HEROKU_EMAIL: ${{ secrets.HEROKU_EMAIL }}
-  WEBHOOK_TOKEN: ${{ secrets.WEBHOOK_TOKEN }}
-  WEBHOOK_ID: ${{ secrets.WEBHOOK_ID }}
-
+    
 jobs:
   build-api:
 
@@ -41,9 +35,9 @@ jobs:
       - uses: akhileshns/heroku-deploy@v3.12.12
 
         with:
-          heroku_api_key: ${{ env.HEROKU_API_KEY }}
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
           heroku_app_name: "ytmparty-api"
-          heroku_email: ${{ env.HEROKU_EMAIL }}
+          heroku_email: ${{ secrets.HEROKU_EMAIL }}
           appdir: "api"
           
   announce-api:
@@ -56,6 +50,6 @@ jobs:
       - uses: appleboy/discord-action@master
 
         with:
-          webhook_id: ${{ env.WEBHOOK_ID }}
-          webhook_token: ${{ env.WEBHOOK_TOKEN }}
-          args: "the project was deployed without any problems"
+          webhook_id: ${{ secrets.WEBHOOK_ID }}
+          webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
+          args: "Api pipeline succesfully passed. Deployed to heroku."
