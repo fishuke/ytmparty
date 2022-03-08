@@ -1,8 +1,11 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const path = require("path");
 
 module.exports = {
     entry: {
-        backgroundPage: path.join(__dirname, "src/backgroundPage.ts"),
+        serviceWorker: path.join(__dirname, "src/serviceWorker.ts"),
+        contentScript: path.join(__dirname, "src/contentScript.ts"),
+        inject: path.join(__dirname, "src/inject.ts"),
         popup: path.join(__dirname, "src/popup/index.tsx"),
     },
     output: {
@@ -19,11 +22,7 @@ module.exports = {
             // Treat src/css/app.css as a global stylesheet
             {
                 test: /\app.css$/,
-                use: [
-                    "style-loader",
-                    "css-loader",
-                    "postcss-loader",
-                ],
+                use: ["style-loader", "css-loader", "postcss-loader"],
             },
             // Load .module.css files as CSS modules
             {

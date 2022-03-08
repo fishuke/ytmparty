@@ -1,10 +1,8 @@
 import React from "react";
 import { Hello } from "@src/components/hello";
-import { browser, Tabs } from "webextension-polyfill-ts";
 import { Scroller } from "@src/components/scroller";
 import css from "./styles.module.css";
-
-// // // //
+import { runtime, Tabs, tabs, scripting } from "webextension-polyfill";
 
 // Scripts to execute in current tab
 const scrollToTopScript = `window.scroll(0,0)`;
@@ -16,11 +14,10 @@ const scrollToBottomScript = `window.scroll(0,9999999)`;
  */
 function executeScript(code: string): void {
     // Query for the active tab in the current window
-    browser.tabs
-        .query({ active: true, currentWindow: true })
-        .then((tabs: Tabs.Tab[]) => {
+    tabs.query({ active: true, currentWindow: true }).then(
+        (tabs: Tabs.Tab[]) => {
             // Pulls current tab from browser.tabs.query response
-            const currentTab: Tabs.Tab | undefined = tabs[0];
+            const currentTab: Tabs.Tab = tabs[0];
 
             // Short circuits function execution is current tab isn't found
             if (!currentTab) {
@@ -28,22 +25,24 @@ function executeScript(code: string): void {
             }
 
             // Executes the script in the current tab
-            browser.tabs
-                .executeScript(currentTab.id, {
-                    code,
+            scripting
+                .executeScript({
+                    target: {
+                        tabId: currentTab.id as number,
+                    },
+                    files: ["js/contentScript.js"],
                 })
                 .then(() => {
                     console.log("Done Scrolling");
                 });
-        });
+        },
+    );
 }
-
-// // // //
 
 export function Popup() {
     // Sends the `popupMounted` event
     React.useEffect(() => {
-        browser.runtime.sendMessage({ popupMounted: true });
+        runtime.sendMessage({ popupMounted: true });
     }, []);
 
     // Renders the component tree

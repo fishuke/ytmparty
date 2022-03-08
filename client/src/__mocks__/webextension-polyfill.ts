@@ -1,5 +1,5 @@
-// src/__mocks__/webextension-polyfill-ts
-// Update this file to include any mocks for the `webextension-polyfill-ts` package
+// src/__mocks__/webextension-polyfill
+// Update this file to include any mocks for the `webextension-polyfill` package
 // outside the Web Extension environment provided by a compatible browser
 export const browser: any = {
     tabs: {
