@@ -5,6 +5,12 @@ on:
     branches: [ master ]
     paths: [ 'api/**/*' ]
 
+env:
+  HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+  HEROKU_EMAIL: ${{ secrets.HEROKU_EMAIL }}
+  WEBHOOK_TOKEN: ${{ secrets.WEBHOOK_TOKEN }}
+  WEBHOOK_ID: ${{ secrets.WEBHOOK_ID }}
+
 jobs:
   build-api:
 
@@ -33,9 +39,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: akhileshns/heroku-deploy@v3.12.12
-        env:
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-          HEROKU_EMAIL: ${{ secrets.HEROKU_EMAIL }}
 
         with:
           heroku_api_key: ${{ env.HEROKU_API_KEY }}
@@ -43,7 +46,7 @@ jobs:
           heroku_email: ${{ env.HEROKU_EMAIL }}
           appdir: "api"
           
-  discord-webhook:
+  announce-api:
     needs: [deploy-api]
 
     runs-on: ubuntu-latest
@@ -51,9 +54,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: appleboy/discord-action@master
-        env:
-          WEBHOOK_TOKEN: ${{ secrets.WEBHOOK_TOKEN }}
-          WEBHOOK_ID: ${{ secrets.WEBHOOK_ID }}
 
         with:
           webhook_id: ${{ env.WEBHOOK_ID }}
