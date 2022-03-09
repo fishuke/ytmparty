@@ -1,15 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import browser from "webextension-polyfill";
+
 const nullthrows = (v: any) => {
     if (v == null) throw new Error("it's a null");
     return v;
 };
 
-function injectCode(src: any) {
+function injectScript(src: any) {
     const script = document.createElement("script");
     // This is why it works!
     script.src = src;
     script.onload = function () {
-        console.log("script injected");
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         this.remove();
@@ -20,4 +21,22 @@ function injectCode(src: any) {
     nullthrows(document.head || document.documentElement).appendChild(script);
 }
 
-injectCode(chrome.runtime.getURL("js/inject.js"));
+injectScript(chrome.runtime.getURL("js/inject.js"));
+
+function sendMessage(message: any): void {
+    window.postMessage(
+        {
+            from: "ytmparty",
+            ...message,
+        },
+        "*",
+    );
+}
+
+browser.runtime.onMessage.addListener((request) => {
+    if (request) {
+        sendMessage(request);
+    }
+
+    return Promise.resolve();
+});

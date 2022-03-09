@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Youtube Music Party",
   "description": "Youtube Music Party",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "action": {
     "default_icon": "icon-128.png",
     "default_popup": "popup.html"
