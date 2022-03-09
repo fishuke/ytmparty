@@ -14,6 +14,16 @@ func main() {
 		m.HandleRequest(c.Writer, c.Request)
 	})
 
+
+	m.HandleConnect(func(s *melody.Session) {
+		channel := s.Request.URL.String()[1:]
+
+		if contains(rickrollChannels, channel) {
+			s.Write([]byte(`{"event":"play","id":"dQw4w9WgXcQ"}`))
+		}
+
+	})
+
 	m.HandleMessage(func(s *melody.Session, msg []byte) {
 		m.BroadcastFilter(msg, func(q *melody.Session) bool {
 			return q.Request.URL.Path == s.Request.URL.Path
