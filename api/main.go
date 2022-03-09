@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/gin-gonic/gin"
 	"gopkg.in/olahol/melody.v1"
+	"os"
 )
 
 func main() {
@@ -19,5 +20,11 @@ func main() {
 		})
 	})
 
-	r.Run(":5000")
+	port := os.Getenv("PORT")
+
+    if port == "" {
+        port = "5000" // Default port if not specified
+    }
+
+	r.Run(":" + port)
 }
