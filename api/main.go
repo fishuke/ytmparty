@@ -9,7 +9,7 @@ func main() {
 	r := gin.Default()
 	m := melody.New()
 
-	r.GET("/:name/ws", func(c *gin.Context) {
+	r.GET("/:channel", func(c *gin.Context) {
 		m.HandleRequest(c.Writer, c.Request)
 	})
 
