@@ -14,7 +14,6 @@ func main() {
 		m.HandleRequest(c.Writer, c.Request)
 	})
 
-
 	m.HandleConnect(func(s *melody.Session) {
 		channel := s.Request.URL.String()[1:]
 
@@ -25,8 +24,9 @@ func main() {
 	})
 
 	m.HandleMessage(func(s *melody.Session, msg []byte) {
+		// dont send to sender
 		m.BroadcastFilter(msg, func(q *melody.Session) bool {
-			return q.Request.URL.Path == s.Request.URL.Path
+			return q.Request.URL.Path == s.Request.URL.Path && q != s
 		})
 	})
 

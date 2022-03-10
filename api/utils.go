@@ -1,6 +1,6 @@
 package main
 
-var rickrollChannels = []string{"rick", "rickroll", "test", "0"}
+var rickrollChannels = []string{"rick", "rickroll", "test", "0", "1337"}
 
 func contains(arr []string, str string) bool {
 	for _, a := range arr {
