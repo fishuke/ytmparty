@@ -13,7 +13,11 @@ browser.runtime.onMessage.addListener(
         console.log(request);
 
         if (request.event === "joinParty") {
-            ws = new WebSocket(`ws://localhost:5000/${request.partyId}`);
+            const url = `ws://localhost:5000/${request.partyId}`;
+            if (ws && ws.OPEN && ws.url === url) {
+                return;
+            }
+            ws = new WebSocket(url);
             listenForMessages();
         } else if (request.event === "leaveParty") {
             ws.close();
@@ -65,7 +69,11 @@ function listenForMessages() {
     };
 }
 
-function sendMessageToContentScript(message: any): void {
+function sendMessageToContentScript(message: {
+    event: string;
+    id?: string;
+    to?: string;
+}): void {
     browser.tabs.query({ active: true, currentWindow: true }).then((tabs) => {
         browser.tabs.sendMessage(tabs[0].id as number, message);
     });
