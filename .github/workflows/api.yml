@@ -52,4 +52,4 @@ jobs:
         with:
           webhook_id: ${{ secrets.WEBHOOK_ID }}
           webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
-          args: "Api pipeline succesfully passed. Deployed to heroku."
+          args: "Api pipeline successfully passed. Deployed to heroku."
