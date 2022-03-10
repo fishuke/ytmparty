@@ -7,11 +7,11 @@ export function Home(props: {
     const [partyId, setPartyId] = React.useState("");
 
     return (
-        <div className="flex flex-col items-center w-full">
-            <span className="lead mb-0">Join A Party.</span>
+        <div className="flex flex-col items-center w-full gap-4">
+            <span className="font-bold text-2xl">Join A Party</span>
             <input
                 type="text"
-                className="form-control"
+                className="bg-dark-gray border-b p-2 w-2/3 focus:outline-none border-light-gray focus:border-white text-white"
                 placeholder="Party ID"
                 value={partyId}
                 onChange={(e) => setPartyId(e.target.value)}
@@ -19,7 +19,11 @@ export function Home(props: {
 
             <button
                 disabled={partyId.length === 0}
-                className="btn btn-primary"
+                className={`border border-light-gray rounded-sm p-2 px-8 ${
+                    partyId.length === 0
+                        ? "opacity-50 cursor-not-allowed"
+                        : "cursor-pointer hover:border-white"
+                }`}
                 onClick={() => {
                     props.onJoin(partyId);
                 }}
@@ -27,10 +31,10 @@ export function Home(props: {
                 Join
             </button>
 
-            <hr />
+            <hr className="h-1 border-light-gray w-2/3" />
 
             <button
-                className="btn btn-primary"
+                className="border border-light-gray hover:border-white rounded-sm p-2 px-8"
                 onClick={async () => {
                     const partyId = nanoid(6);
                     await setPartyId(partyId);

@@ -1,4 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;500&display=swap');
+
 .popupContainer {
+    font-family: 'Roboto', sans-serif;
+    @apply bg-dark-gray text-white;
     min-width: 300px;
     min-height: 300px;
     display: flex;

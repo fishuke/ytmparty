@@ -14,10 +14,15 @@ export function Party(props: {
     }, []);
 
     return (
-        <div className="grid gap-3 grid-cols-2 mt-3 w-full">
-            <h3>PartyId: {props.partyId}</h3>
+        <div className="w-full flex flex-col gap-4">
+            <h3 className="font-bold text-2xl">PartyId: {props.partyId}</h3>
 
-            <button onClick={props.leaveParty}>Leave Party</button>
+            <button
+                className="border border-light-gray hover:border-white rounded-sm p-2 px-8"
+                onClick={props.leaveParty}
+            >
+                Leave Party
+            </button>
         </div>
     );
 }
