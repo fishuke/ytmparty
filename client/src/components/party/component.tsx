@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { runtime } from "webextension-polyfill";
+import browser from "webextension-polyfill";
 
 export function Party(props: {
     partyId: string;
@@ -7,7 +7,7 @@ export function Party(props: {
 }): JSX.Element {
     useEffect(() => {
         // send a message to background extension
-        runtime.sendMessage({
+        browser.runtime.sendMessage({
             event: "joinParty",
             partyId: props.partyId,
         });

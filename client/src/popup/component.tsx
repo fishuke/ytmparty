@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import css from "./styles.module.css";
-import { runtime } from "webextension-polyfill";
+import browser from "webextension-polyfill";
 import { Home } from "@src/components/home";
 import { Party } from "@src/components/party";
 
@@ -15,7 +15,9 @@ export function Popup(): JSX.Element {
                     <Party
                         partyId={partyId}
                         leaveParty={() => {
-                            runtime.sendMessage({ event: "leaveParty" });
+                            browser.runtime.sendMessage({
+                                event: "leaveParty",
+                            });
                             setInParty(false);
                             setPartyId("");
                         }}

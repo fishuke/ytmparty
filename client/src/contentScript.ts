@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import browser from "webextension-polyfill";
-
 const nullthrows = (v: any) => {
     if (v == null) throw new Error("it's a null");
     return v;
@@ -32,6 +31,12 @@ function sendMessage(message: any): void {
         "*",
     );
 }
+
+window.addEventListener("message", function (event) {
+    if (event.data?.from === "injected") {
+        browser.runtime.sendMessage(event.data);
+    }
+});
 
 browser.runtime.onMessage.addListener((request) => {
     if (request) {

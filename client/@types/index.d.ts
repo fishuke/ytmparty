@@ -7,6 +7,9 @@ declare global {
             pauseVideo: () => void;
             playVideo: () => void;
             seekTo: (seconds: number) => void;
+            getVideoData: () => {
+                video_id: string;
+            };
         };
     }
 }

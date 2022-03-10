@@ -1,6 +1,6 @@
-# Youtube Music Party
+# YouTube Music Party
 
-Listen to music with your friends on Youtube Music.
+Listen to music with your friends on YouTube Music.
 
 ## Why?
 

@@ -1,0 +1,1 @@
+export { Party } from "./component";
