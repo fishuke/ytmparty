@@ -30,7 +30,6 @@ window.addEventListener("message", function (event) {
                 break;
             case "seek":
                 ignoredEvents.seeked = true;
-                console.log("seek", request.to);
                 api.seekTo(request.to);
                 break;
         }
@@ -76,7 +75,6 @@ function addEventListeners(): void {
                         ignoredEvents.pause = false;
                         return;
                     }
-                    console.log("pause");
                     sendMessage({
                         event: "pause",
                     });
@@ -87,7 +85,6 @@ function addEventListeners(): void {
                         ignoredEvents.unpause = false;
                         return;
                     }
-                    console.log("unpause");
                     sendMessage({
                         event: "unpause",
                     });
@@ -98,7 +95,6 @@ function addEventListeners(): void {
                         return;
                     }
                     if (video) {
-                        console.log("seeked", video.currentTime);
                         sendMessage({
                             event: "seek",
                             to: video.currentTime,
@@ -107,7 +103,6 @@ function addEventListeners(): void {
 
                     break;
                 case "loadedmetadata":
-                    console.log("loaded metadata");
                     const { video_id } = api.getVideoData();
 
                     sendMessage({

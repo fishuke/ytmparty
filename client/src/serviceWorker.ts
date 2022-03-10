@@ -10,8 +10,6 @@ browser.runtime.onMessage.addListener(
         id?: string;
         to?: string;
     }) => {
-        console.log(request);
-
         if (request.event === "joinParty") {
             const url = `ws://localhost:5000/${request.partyId}`;
             if (ws && ws.OPEN && ws.url === url) {
@@ -41,7 +39,6 @@ browser.runtime.onMessage.addListener(
 function listenForMessages() {
     ws.onmessage = (event) => {
         const data = JSON.parse(event.data);
-        console.log(data);
         switch (data.event) {
             case "play":
                 sendMessageToContentScript({
