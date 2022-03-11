@@ -26,9 +26,7 @@
     }
   ],
   "permissions": [
-    "tabs",
-    "activeTab",
-    "scripting"
+    "activeTab"
   ],
   "host_permissions": [
     "https://music.youtube.com/*"
