@@ -22,7 +22,7 @@ browser.runtime.onMessage.addListener(
         } else if (request.event === "leaveParty") {
             ws.close();
         }
-        if (ws) {
+        if (ws && ws.OPEN) {
             if (request.event === "unpause") {
                 ws.send(JSON.stringify({ event: "unpause" }));
             } else if (request.event === "pause") {
