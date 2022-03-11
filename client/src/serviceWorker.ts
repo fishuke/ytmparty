@@ -11,7 +11,9 @@ browser.runtime.onMessage.addListener(
         to?: string;
     }) => {
         if (request.event === "joinParty") {
-            const url = `ws://localhost:5000/${request.partyId}`;
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            const url = process.env.REACT_APP_API_URL + request.partyId;
             if (ws && ws.OPEN && ws.url === url) {
                 return;
             }

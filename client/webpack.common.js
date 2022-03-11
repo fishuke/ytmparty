@@ -40,6 +40,9 @@ module.exports = {
             },
         ],
     },
+    optimization: {
+        minimize: false,
+    },
     // Setup @src path resolution for TypeScript files
     resolve: {
         extensions: [".ts", ".tsx", ".js"],

@@ -15,7 +15,9 @@ export function Party(props: {
 
     return (
         <div className="w-full flex flex-col gap-4">
-            <h3 className="font-bold text-2xl">PartyId: {props.partyId}</h3>
+            <h3 className="font-bold text-2xl text-center">
+                Party ID: {props.partyId}
+            </h3>
 
             <button
                 className="border border-light-gray hover:border-white rounded-sm p-2 px-8"
