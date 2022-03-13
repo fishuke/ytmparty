@@ -14,15 +14,20 @@ browser.runtime.onMessage.addListener(
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
             const url = process.env.REACT_APP_API_URL + request.partyId;
-            if (ws && ws.OPEN && ws.url === url) {
+            if (ws && ws.readyState === WebSocket.OPEN && ws.url === url) {
                 return;
             }
             ws = new WebSocket(url);
             listenForMessages();
-        } else if (request.event === "leaveParty") {
-            ws.close();
+            return;
         }
-        if (ws && ws.OPEN) {
+
+        if (request.event === "leaveParty") {
+            ws.close();
+            return;
+        }
+
+        if (ws && ws.readyState === WebSocket.OPEN) {
             if (request.event === "unpause") {
                 ws.send(JSON.stringify({ event: "unpause" }));
             } else if (request.event === "pause") {
