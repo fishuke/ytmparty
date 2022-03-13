@@ -1,7 +1,7 @@
 // Listen for messages sent from other parts of the extension
 import browser from "webextension-polyfill";
 
-let ws: WebSocket;
+let ws: WebSocket | undefined;
 
 browser.runtime.onMessage.addListener(
     (request: {
@@ -22,8 +22,9 @@ browser.runtime.onMessage.addListener(
             return;
         }
 
-        if (request.event === "leaveParty") {
+        if (ws && request.event === "leaveParty") {
             ws.close();
+            ws = undefined;
             return;
         }
 
