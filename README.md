@@ -1,6 +1,6 @@
 # YouTube Music Party
 
-Listen to music with your friends on YouTube Music.
+Listen to music with your friends on YouTube Music. [Demo](https://chrome.google.com/webstore/detail/youtube-music-party/cdmmbghbolflmmfecknfkjcflnadaocg)
 
 ## Why?
 
