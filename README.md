@@ -4,7 +4,7 @@ Listen to music with your friends on YouTube Music. [Demo](https://chrome.google
 
 ## Why?
 
-I like listening music.
+I like listening to music.
 I wanted to listen music with my friends but YouTube Music doesn't have feature so.
 Then I wanted to make this extension.
 It's a simple extension which listen play, pause, seek and Media
